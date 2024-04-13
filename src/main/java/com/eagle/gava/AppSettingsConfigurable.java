@@ -1,12 +1,10 @@
 package com.eagle.gava;
-import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.ui.Messages;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
-import java.awt.*;
+import java.util.Objects;
+
 public class AppSettingsConfigurable implements Configurable {
 
     private AppSettingsComponent mySettingsComponent;
@@ -37,6 +35,8 @@ public class AppSettingsConfigurable implements Configurable {
         AppSettingsState settings = AppSettingsState.getInstance();
         boolean modified = !mySettingsComponent.getUserNameText().equals(settings.userId);
         modified |= mySettingsComponent.getIdeaUserStatus() != settings.ideaStatus;
+        modified |= !mySettingsComponent.getTemplateName().equals(settings.templateName);
+        modified |= !Objects.equals(mySettingsComponent.getSubTemplateName(), settings.subTemplateName);
         return modified;
     }
 
@@ -45,6 +45,8 @@ public class AppSettingsConfigurable implements Configurable {
         AppSettingsState settings = AppSettingsState.getInstance();
         settings.userId = mySettingsComponent.getUserNameText();
         settings.ideaStatus = mySettingsComponent.getIdeaUserStatus();
+        settings.templateName = mySettingsComponent.getTemplateName();
+        settings.subTemplateName = mySettingsComponent.getSubTemplateName();
     }
 
     @Override
@@ -52,6 +54,8 @@ public class AppSettingsConfigurable implements Configurable {
         AppSettingsState settings = AppSettingsState.getInstance();
         mySettingsComponent.setUserNameText(settings.userId);
         mySettingsComponent.setIdeaUserStatus(settings.ideaStatus);
+        mySettingsComponent.setTemplateName(settings.templateName);
+        mySettingsComponent.setSubTemplateName(settings.subTemplateName);
     }
 
     @Override

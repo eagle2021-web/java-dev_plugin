@@ -17,6 +17,8 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
 
     public String userId = "John Q. Public";
     public boolean ideaStatus = false;
+    public String templateName = "A";
+    public String subTemplateName = "A1";
 
     public static AppSettingsState getInstance() {
         return ApplicationManager.getApplication().getService(AppSettingsState.class);
