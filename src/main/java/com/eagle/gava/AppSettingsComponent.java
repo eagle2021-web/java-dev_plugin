@@ -38,43 +38,35 @@ public class AppSettingsComponent {
                 updateCascadingComponents();
             }
         });
-        JPanel horizontalPanel = new JPanel();
-        horizontalPanel.setLayout(new BoxLayout(horizontalPanel, BoxLayout.X_AXIS));
-        JLabel templateLabel = new JLabel("框架：");
-        horizontalPanel.add(templateLabel);
-        horizontalPanel.add(Box.createHorizontalStrut(1));
-        horizontalPanel.add(templateBox);
-        horizontalPanel.add(Box.createHorizontalGlue()); // 使用glue来吸收额外的空间
-        horizontalPanel.add(Box.createHorizontalStrut(100));
-        JLabel subTemplateLabel = new JLabel("子模板：");
-        horizontalPanel.add(subTemplateLabel);
-        horizontalPanel.add(Box.createHorizontalStrut(1));
-        horizontalPanel.add(subTemplateBox); //我只是希望，subTemplateBox和templateBox所在的选择框不用铺满，因为内容很少，或者我可以控制它的宽度为10
-        horizontalPanel.add(Box.createHorizontalGlue()); // 使用glue来吸收额外的空间
-        horizontalPanel.add(Box.createHorizontalStrut(20));
+
         JComboBox<String> myComboBox = new JComboBox<>(new String[] {"Option 1", "Option 2"});
-        JPanel optionPanel = new JPanel();
-        optionPanel.add(new JLabel("选项："));
+        JComboBox<String> box2 = new JComboBox<>(new String[] {"Option 1", "Option 2"});
+        myComboBox.setPreferredSize(new Dimension(200, 20)); // 设置宽度为 200 像素，高度为 20 像素
+
+
+
+
+
+// 获取树形视图的默认关闭图标（这只是一个例子，它可能不是你想要的图标）
+        Icon icon = UIManager.getIcon("Tree.closedIcon");
+
+// 创建 JLabel，包含图标和文本
+        JLabel helpLabel = new JLabel("文本", icon, SwingConstants.LEFT);
+        helpLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
+
+        JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        optionPanel.add(new JLabel("选项1222222："));
+//        optionPanel.add(new JLabel("223"));
+        optionPanel.add(helpLabel);
         optionPanel.add(myComboBox);
 
-
-        JLabel helpLabel = new JLabel("222222222222222");
-        helpLabel.setIcon(new ImageIcon("javax/swing/plaf/metal/icons/ocean/question.png"));
-        helpLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
-        optionPanel.add(helpLabel);
         ComboBox<String> box1 = new ComboBox<>(new String[]{"sdf", "222"});
+        box1.setPreferredSize(new Dimension(200, 20)); // 设置宽度为 200 像素，高度为 20 像素
         myMainPanel = FormBuilder.createFormBuilder()
-//                .addLabeledComponent(new JBLabel("Enter user name: "), myUserNameText, 1, false) // #0
-//                .addComponent(horizontalPanel)
                 .addComponent(optionPanel)
-//                .setHorizontalGap(111)
-//                .addLabeledComponent(new JBLabel("Temp "), temp, 1, false)
-//                .setAlignLabelOnRight(true)
-//                .addLabeledComponent(new JBLabel("Template "), templateBox, 0, false)
-//                .addComponent(templateBox)
-                .addSeparator()
-                .addLabeledComponent(new JBLabel("sdfsdf"), new JSeparator(),1,false)
-                .addLabeledComponent(new JBLabel("dsfsdf"), box1, 1, false)
+                .addLabeledComponent(new JBLabel("sdfsdf2222222"), new JSeparator(),200,false)
+                .addLabeledComponent(new JBLabel("dsfsdf2222"), box1, 20, false)
+                .addLabeledComponent(new JBLabel("box2"), box2, 20, false)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
 
