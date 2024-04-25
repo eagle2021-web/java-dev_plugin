@@ -7,6 +7,7 @@ import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.FormBuilder;
+import com.intellij.util.ui.JBImageIcon;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -51,15 +52,29 @@ public class AppSettingsComponent {
         horizontalPanel.add(subTemplateBox); //我只是希望，subTemplateBox和templateBox所在的选择框不用铺满，因为内容很少，或者我可以控制它的宽度为10
         horizontalPanel.add(Box.createHorizontalGlue()); // 使用glue来吸收额外的空间
         horizontalPanel.add(Box.createHorizontalStrut(20));
+        JComboBox<String> myComboBox = new JComboBox<>(new String[] {"Option 1", "Option 2"});
+        JPanel optionPanel = new JPanel();
+        optionPanel.add(new JLabel("选项："));
+        optionPanel.add(myComboBox);
 
+
+        JLabel helpLabel = new JLabel("222222222222222");
+        helpLabel.setIcon(new ImageIcon("javax/swing/plaf/metal/icons/ocean/question.png"));
+        helpLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
+        optionPanel.add(helpLabel);
+        ComboBox<String> box1 = new ComboBox<>(new String[]{"sdf", "222"});
         myMainPanel = FormBuilder.createFormBuilder()
-                .addLabeledComponent(new JBLabel("Enter user name: "), myUserNameText, 1, false) // #0
-                .addComponent(horizontalPanel)
+//                .addLabeledComponent(new JBLabel("Enter user name: "), myUserNameText, 1, false) // #0
+//                .addComponent(horizontalPanel)
+                .addComponent(optionPanel)
 //                .setHorizontalGap(111)
 //                .addLabeledComponent(new JBLabel("Temp "), temp, 1, false)
 //                .setAlignLabelOnRight(true)
 //                .addLabeledComponent(new JBLabel("Template "), templateBox, 0, false)
 //                .addComponent(templateBox)
+                .addSeparator()
+                .addLabeledComponent(new JBLabel("sdfsdf"), new JSeparator(),1,false)
+                .addLabeledComponent(new JBLabel("dsfsdf"), box1, 1, false)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
 
