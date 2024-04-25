@@ -53,6 +53,8 @@ public class AppSettingsComponent {
 // 创建 JLabel，包含图标和文本
         JLabel helpLabel = new JLabel("文本", icon, SwingConstants.LEFT);
         helpLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
+        helpLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+        helpLabel.setVerticalTextPosition(SwingConstants.CENTER);
 
         JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         optionPanel.add(new JLabel("选项1222222："));
