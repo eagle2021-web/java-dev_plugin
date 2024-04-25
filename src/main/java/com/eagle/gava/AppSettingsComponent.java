@@ -51,10 +51,13 @@ public class AppSettingsComponent {
         Icon icon = UIManager.getIcon("Tree.closedIcon");
 
 // 创建 JLabel，包含图标和文本
+        // 创建带有文本和图标的JLabel，但图标默认在左边
         JLabel helpLabel = new JLabel("文本", icon, SwingConstants.LEFT);
+        helpLabel.setHorizontalTextPosition(SwingConstants.RIGHT); // 设置文本在图标右边
+        helpLabel.setIconTextGap(10); // 设置图标和文本之间的间隔
+
+        // 设置工具提示
         helpLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
-        helpLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-        helpLabel.setVerticalTextPosition(SwingConstants.CENTER);
 
         JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         optionPanel.add(new JLabel("选项1222222："));
