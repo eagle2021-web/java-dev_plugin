@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -33,7 +34,9 @@ public class AppSettingsComponent {
         JLabel preLabel = new JLabel(labelText);
         preLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(preLabel);
-
+        URL iconUrl = AppSettingsComponent.class.getResource("icon/tip.png");
+        assert iconUrl != null;
+        ImageIcon customIcon = new ImageIcon(iconUrl);
         JLabel tipLabel = new JLabel("", UIManager.getIcon("Tree.closedIcon"), SwingConstants.LEFT);
         tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
         tipLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
@@ -111,6 +114,7 @@ public class AppSettingsComponent {
         JLabel tipLabel = new JLabel("", UIManager.getIcon("Tree.closedIcon"), SwingConstants.LEFT);
         tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
         tipLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
+        tipLabel.setPreferredSize(new Dimension(30, 30));
 //        tipLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(tipLabel);
         System.out.println(optionPanel.getSize());
@@ -124,18 +128,26 @@ public class AppSettingsComponent {
     }
 
     public static final JComponent createJPanel5(String labelText, JComponent checkBox, String simpleText) {
-//        JPanel optionPanel = new JPanel();
-//        optionPanel.setLayout(new BoxLayout(optionPanel, BoxLayout.X_AXIS)); // Use BoxLayout
         JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel jLabel = new JLabel(labelText);
         jLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(jLabel);
-
-        JLabel tipLabel = new JLabel("", UIManager.getIcon("Tree.closedIcon"), SwingConstants.LEFT);
+        URL iconUrl = AppSettingsComponent.class.getClassLoader().getResource("icon/tip.png");
+        assert iconUrl != null;
+        ImageIcon customIcon = new ImageIcon(iconUrl);
+        System.out.println(customIcon.getIconHeight());
+        System.out.println(customIcon.getIconWidth());
+        // tip
+        JLabel tipLabel = new JLabel("", SwingConstants.LEFT);
+        tipLabel.setPreferredSize(new Dimension(30, 30));
         tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
-        String htmlText = DIV_TEMP.replace("$1", simpleText);
-        tipLabel.setToolTipText(htmlText);
+        if (simpleText != null) {
+            tipLabel.setIcon(customIcon);
+            String htmlText = DIV_TEMP.replace("$1", simpleText);
+            tipLabel.setToolTipText(htmlText);
+        }
         optionPanel.add(tipLabel);
+
         checkBox.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(checkBox);
         return optionPanel;
@@ -154,13 +166,18 @@ public class AppSettingsComponent {
         JComponent panel2 = createJPanel("MAX_1：");
         JComponent panel3 = createJPanel("MAX_NEW_TOKENSMAX_NEW_TOKENS：");
         JComponent panel4 = createJPanel("MAX_TOKEN:", new ComboBox<>(new String[]{"sdf", "222"}), "设置文本报告打发士大夫第三方士大夫士大夫士大夫发 wordafsdf df asdf sdf sd ");
+        JComponent panel5 = createJPanel("你有什么建议:", new ComboBox<>(new String[]{"sdf", "222"}), "不推荐报班，因为贷款还不起。");
+        JComponent panel6 = createJPanel("你有什么建议222:", new ComboBox<>(new String[]{"sdf", "222"}), null);
 
         ComboBox<String> box1 = new ComboBox<>(new String[]{"sdf", "222"});
         JComboBox<String> box2 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
         box1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         box2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        myMainPanel = FormBuilder.createFormBuilder().addComponent(panel1).addComponent(panel2).addComponent(panel3).addComponent(panel4).addLabeledComponent(new JBLabel("分割发现："), new JSeparator(), 1, false).addLabeledComponent(new JBLabel("MAX_NEW_TOKENS："), box1, 1, false).addLabeledComponent(new JBLabel("MAX_TOKENS:"), box2, 1, false).addComponentFillVertically(new JPanel(), 0).getPanel();
+        myMainPanel = FormBuilder.createFormBuilder().addComponent(panel1).addComponent(panel2).addComponent(panel3).addComponent(panel4)
+                .addComponent(panel5)
+                .addComponent(panel6)
+                .addLabeledComponent(new JBLabel("分割发现："), new JSeparator(), 1, false).addLabeledComponent(new JBLabel("MAX_NEW_TOKENS："), box1, 1, false).addLabeledComponent(new JBLabel("MAX_TOKENS:"), box2, 1, false).addComponentFillVertically(new JPanel(), 0).getPanel();
 
     }
 

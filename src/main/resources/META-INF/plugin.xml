@@ -23,9 +23,10 @@
         <applicationConfigurable parentId="settings"
                                  instance="com.eagle.gava.AppSettingsConfigurable"
                                  id="com.eagle.gava.AppSettingsConfigurable"
-                                 displayName="SDK: Application Settings Example"/>
+                                 displayName="Java自学，面向AI编程"/>
         <applicationService serviceImplementation="com.eagle.gava.AppSettingsState"/>
     </extensions>
+
     <actions>
 
         <action id="AddFileAction" class="com.eagle.gava.AddJavaFileAction" text="Add File" description="Adds a new Java file">
