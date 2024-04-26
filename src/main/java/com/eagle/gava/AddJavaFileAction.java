@@ -72,7 +72,7 @@ public class AddJavaFileAction extends AnAction {
     }
 
     private void createJavaFile(PsiDirectory directory, String fileName, Project project) {
-        WriteAction.run(() -> {
+        WriteCommandAction.runWriteCommandAction(project, () -> {
             FileType fileType = FileTypeManager.getInstance().getFileTypeByExtension("java");
             String fileContent = "public class " + fileName + " {\n"
                     + "    // ... Your file content here\n"
