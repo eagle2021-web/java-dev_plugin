@@ -7,7 +7,6 @@ import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.FormBuilder;
-import com.intellij.util.ui.JBImageIcon;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -18,7 +17,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class AppSettingsComponent {
-
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 30;
     private final JPanel myMainPanel;
     private final JBTextField myUserNameText = new JBTextField();
     private final JBCheckBox myIdeaUserStatus = new JBCheckBox("Do you use IntelliJ IDEA? ");
@@ -29,6 +29,21 @@ public class AppSettingsComponent {
     private final JComboBox<SubTemplateEnum> temp =
             new ComboBox<>(new EnumComboBoxModel<>(SubTemplateEnum.class));
 
+    public static final JComponent createJPanel(String labelText){
+        JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        optionPanel.add(new JLabel(labelText));
+
+        JLabel tipLabel = new JLabel("", UIManager.getIcon("Tree.closedIcon"), SwingConstants.LEFT);
+        tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
+        tipLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
+
+        optionPanel.add(tipLabel);
+
+        JComboBox<String> myComboBox = new JComboBox<>(new String[] {"Option 1", "Option 2"});
+        myComboBox.setPreferredSize(new Dimension(WIDTH, HEIGHT)); // 设置宽度为 200 像素，高度为 20 像素
+        optionPanel.add(myComboBox);
+        return optionPanel;
+    }
     public AppSettingsComponent() {
 //        EnumComboBoxModel<SubTemplateEnum> boxModel = new EnumComboBoxModel<>(SubTemplateEnum.class);
 
@@ -39,39 +54,20 @@ public class AppSettingsComponent {
             }
         });
 
-        JComboBox<String> myComboBox = new JComboBox<>(new String[] {"Option 1", "Option 2"});
-        JComboBox<String> box2 = new JComboBox<>(new String[] {"Option 1", "Option 2"});
-        myComboBox.setPreferredSize(new Dimension(200, 20)); // 设置宽度为 200 像素，高度为 20 像素
+        createJPanel("MAX_NEW_TOKENS：")
 
 
-
-
-
-// 获取树形视图的默认关闭图标（这只是一个例子，它可能不是你想要的图标）
-        Icon icon = UIManager.getIcon("Tree.closedIcon");
-
-// 创建 JLabel，包含图标和文本
-        // 创建带有文本和图标的JLabel，但图标默认在左边
-        JLabel helpLabel = new JLabel("文本", icon, SwingConstants.LEFT);
-        helpLabel.setHorizontalTextPosition(SwingConstants.RIGHT); // 设置文本在图标右边
-        helpLabel.setIconTextGap(10); // 设置图标和文本之间的间隔
-
-        // 设置工具提示
-        helpLabel.setToolTipText("这里填写您的提示信息，例如：开启平滑滚动可以提高滚动的视觉效果。");
-
-        JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        optionPanel.add(new JLabel("选项1222222："));
-//        optionPanel.add(new JLabel("223"));
-        optionPanel.add(helpLabel);
-        optionPanel.add(myComboBox);
-
+//        Border emptyBorder = BorderFactory.createEmptyBorder(1, 20, 1, 1);
+//        myComboBox.setBorder(emptyBorder);
         ComboBox<String> box1 = new ComboBox<>(new String[]{"sdf", "222"});
-        box1.setPreferredSize(new Dimension(200, 20)); // 设置宽度为 200 像素，高度为 20 像素
+        JComboBox<String> box2 = new JComboBox<>(new String[] {"Option 1", "Option 2"});
+        box1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        box2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         myMainPanel = FormBuilder.createFormBuilder()
                 .addComponent(optionPanel)
-                .addLabeledComponent(new JBLabel("sdfsdf2222222"), new JSeparator(),200,false)
-                .addLabeledComponent(new JBLabel("dsfsdf2222"), box1, 20, false)
-                .addLabeledComponent(new JBLabel("box2"), box2, 20, false)
+                .addLabeledComponent(new JBLabel("分割发现："), new JSeparator(),1,false)
+                .addLabeledComponent(new JBLabel("MAX_NEW_TOKENS："), box1, 1, false)
+                .addLabeledComponent(new JBLabel("MAX_TOKENS:"), box2, 1, false)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
 

@@ -20,7 +20,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable parentId="tools"
+        <applicationConfigurable parentId="settings"
                                  instance="com.eagle.gava.AppSettingsConfigurable"
                                  id="com.eagle.gava.AppSettingsConfigurable"
                                  displayName="SDK: Application Settings Example"/>
