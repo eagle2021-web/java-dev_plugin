@@ -132,6 +132,10 @@ public class AppSettingsComponent {
         JLabel jLabel = new JLabel(labelText);
         jLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(jLabel);
+
+        JPanel spacerPanel = new JPanel();
+        spacerPanel.setPreferredSize(new Dimension(0, 10)); // Adjust the height as needed
+        optionPanel.add(spacerPanel);
         URL iconUrl = AppSettingsComponent.class.getClassLoader().getResource("icon/tip.png");
         assert iconUrl != null;
         ImageIcon customIcon = new ImageIcon(iconUrl);
@@ -150,6 +154,7 @@ public class AppSettingsComponent {
 
         checkBox.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(checkBox);
+
         return optionPanel;
     }
 
@@ -174,10 +179,18 @@ public class AppSettingsComponent {
         box1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         box2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        myMainPanel = FormBuilder.createFormBuilder().addComponent(panel1).addComponent(panel2).addComponent(panel3).addComponent(panel4)
+        myMainPanel = FormBuilder.createFormBuilder()
+                .setVerticalGap(0)
+                .addComponent(panel1)
+                .addComponent(panel2)
+                .addComponent(panel3)
+                .addLabeledComponent("", panel4, 1, false)
                 .addComponent(panel5)
                 .addComponent(panel6)
-                .addLabeledComponent(new JBLabel("分割发现："), new JSeparator(), 1, false).addLabeledComponent(new JBLabel("MAX_NEW_TOKENS："), box1, 1, false).addLabeledComponent(new JBLabel("MAX_TOKENS:"), box2, 1, false).addComponentFillVertically(new JPanel(), 0).getPanel();
+                .addLabeledComponent(new JBLabel("分割发现："), new JSeparator(), 1, false)
+                .addLabeledComponent(new JBLabel("MAX_NEW_TOKENS："), box1, 1, false)
+                .addLabeledComponent(new JBLabel("MAX_TOKENS:"), box2, 1, false)
+                .addComponentFillVertically(new JPanel(), 0).getPanel();
 
     }
 
