@@ -133,9 +133,6 @@ public class AppSettingsComponent {
         jLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(jLabel);
 
-        JPanel spacerPanel = new JPanel();
-        spacerPanel.setPreferredSize(new Dimension(0, 10)); // Adjust the height as needed
-        optionPanel.add(spacerPanel);
         URL iconUrl = AppSettingsComponent.class.getClassLoader().getResource("icon/tip.png");
         assert iconUrl != null;
         ImageIcon customIcon = new ImageIcon(iconUrl);
@@ -154,10 +151,38 @@ public class AppSettingsComponent {
 
         checkBox.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(checkBox);
-
+        optionPanel.setPreferredSize(new Dimension(0, HEIGHT + 5));
         return optionPanel;
     }
 
+    public static final JComponent createJPanelByForm(String labelText, JComponent checkBox, String simpleText) {
+        JLabel jLabel = new JLabel(labelText);
+        jLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        URL iconUrl = AppSettingsComponent.class.getClassLoader().getResource("icon/tip.png");
+        assert iconUrl != null;
+        ImageIcon customIcon = new ImageIcon(iconUrl);
+        System.out.println(customIcon.getIconHeight());
+        System.out.println(customIcon.getIconWidth());
+        // tip
+        JLabel tipLabel = new JLabel("", SwingConstants.LEFT);
+        tipLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
+        if (simpleText != null) {
+            tipLabel.setIcon(customIcon);
+            String htmlText = DIV_TEMP.replace("$1", simpleText);
+            tipLabel.setToolTipText(htmlText);
+        }
+        JComboBox<String> box4 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
+        checkBox.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        JPanel panel = FormBuilder.createFormBuilder()
+                .setVerticalGap(0)
+                .addComponent(jLabel)
+                .addComponent(tipLabel)
+                .addComponent(checkBox)
+                .getPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        return panel;
+    }
     public static final JComponent createJPanel(String labelText) {
         return createJPanel4(labelText);
     }
@@ -176,22 +201,49 @@ public class AppSettingsComponent {
 
         ComboBox<String> box1 = new ComboBox<>(new String[]{"sdf", "222"});
         JComboBox<String> box2 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
+        JComboBox<String> box3 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
+        JComboBox<String> box4 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
+        JComboBox<String> box31 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
+        JComboBox<String> box41 = new JComboBox<>(new String[]{"Option 1", "Option 2"});
         box1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         box2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        box3.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        box4.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        box31.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        box41.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        JPanel panel = FormBuilder.createFormBuilder()
+                .addLabeledComponent(new JBLabel("333333333"), box3, 1, false)
+                .addLabeledComponent(new JBLabel("444444444444"), box4, 1, false)
+                .getPanel();
 
+        JPanel panel22 = FormBuilder.createFormBuilder()
+                .addLabeledComponent(new JBLabel("333333333"), box31, 1, false)
+                .addLabeledComponent(new JBLabel("444444444444"), box41, 1, false)
+                .getPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel.setPreferredSize(new Dimension(0, 35));
+        panel22.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JComponent panel44 = createJPanelByForm("MAX_TOKEN:", new ComboBox<>(new String[]{"sdf", "222"}), "设置文本报告打发士大夫第三方士大夫士大夫士大夫发 wordafsdf df asdf sdf sd ");
+        JComponent panel54 = createJPanelByForm("你有什么建议:", new ComboBox<>(new String[]{"sdf", "222"}), "不推荐报班，因为贷款还不起。");
+        JComponent panel64 = createJPanelByForm("你有什么建议222:", new ComboBox<>(new String[]{"sdf", "222"}), null);
         myMainPanel = FormBuilder.createFormBuilder()
                 .setVerticalGap(0)
-                .addComponent(panel1)
-                .addComponent(panel2)
-                .addComponent(panel3)
-                .addLabeledComponent("", panel4, 1, false)
-                .addComponent(panel5)
-                .addComponent(panel6)
+//                .addComponent(panel1)
+//                .addComponent(panel2)
+//                .addComponent(panel3)
+                .addComponent(panel4,1)
+                .addComponent(panel5, 1)
+                .addComponent(panel6, 1)
                 .addLabeledComponent(new JBLabel("分割发现："), new JSeparator(), 1, false)
-                .addLabeledComponent(new JBLabel("MAX_NEW_TOKENS："), box1, 1, false)
-                .addLabeledComponent(new JBLabel("MAX_TOKENS:"), box2, 1, false)
+                .addLabeledComponent(new JBLabel("bbbbb"), box1, 1, false)
+//                .addComponent(box2)
+                .addComponent(panel)
+                .addLabeledComponent(new JBLabel("AAAAA"), panel22, 1, false)
+//                .addComponent(panel22)
+                .addComponent(panel44)
+                .addComponent(panel54)
+                .addComponent(panel64)
                 .addComponentFillVertically(new JPanel(), 0).getPanel();
-
     }
 
     private void updateCascadingComponents() {
