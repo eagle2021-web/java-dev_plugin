@@ -1,15 +1,15 @@
 package com.eagle.gava.action;
-import com.intellij.psi.PsiMethod;
+
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -30,8 +30,7 @@ public class CaseAction extends AnAction {
         System.out.println("update");
         if(e.getInputEvent() instanceof KeyEvent){
             System.out.println("Action performed by shortcut");
-            // 打印对应快捷键
-            System.out.println("((KeyEvent)e).getKeyCode() = " + ((KeyEvent) e).getKeyCode());
+//            System.out.println("((KeyEvent)e).getKeyCode() = " + ((KeyEvent) e).getKeyCode());
         }
         if (isActionPerformedByMouseClick(e)) {
             System.out.println("Action performed by clicking button or using shortcut");
@@ -49,10 +48,10 @@ public class CaseAction extends AnAction {
         if (file == null || element == null) {
             return false;
         }
+        PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
 
         return true;
         // Find the method containing the current element
-        PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
 //
 //        if (method == null) {
 //            return false;
