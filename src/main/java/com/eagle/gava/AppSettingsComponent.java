@@ -151,7 +151,7 @@ public class AppSettingsComponent {
 
         checkBox.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         optionPanel.add(checkBox);
-        optionPanel.setPreferredSize(new Dimension(0, HEIGHT + 5));
+        optionPanel.setPreferredSize(new Dimension(0, HEIGHT));
         return optionPanel;
     }
 
@@ -221,13 +221,13 @@ public class AppSettingsComponent {
                 .addLabeledComponent(new JBLabel("444444444444"), box41, 1, false)
                 .getPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panel.setPreferredSize(new Dimension(0, 35));
+        panel.setPreferredSize(new Dimension(0, 30));
         panel22.setLayout(new FlowLayout(FlowLayout.LEFT));
         JComponent panel44 = createJPanelByForm("MAX_TOKEN:", new ComboBox<>(new String[]{"sdf", "222"}), "设置文本报告打发士大夫第三方士大夫士大夫士大夫发 wordafsdf df asdf sdf sd ");
         JComponent panel54 = createJPanelByForm("你有什么建议:", new ComboBox<>(new String[]{"sdf", "222"}), "不推荐报班，因为贷款还不起。");
         JComponent panel64 = createJPanelByForm("你有什么建议222:", new ComboBox<>(new String[]{"sdf", "222"}), null);
         myMainPanel = FormBuilder.createFormBuilder()
-                .setVerticalGap(0)
+                .setVerticalGap(-5)
 //                .addComponent(panel1)
 //                .addComponent(panel2)
 //                .addComponent(panel3)
