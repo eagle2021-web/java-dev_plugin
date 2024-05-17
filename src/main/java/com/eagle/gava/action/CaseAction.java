@@ -7,7 +7,7 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.PsiModifierList;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.KeyEvent;
@@ -25,16 +25,18 @@ public class CaseAction extends AnAction {
     @Override
     public void update(@NotNull AnActionEvent e) {
         // 打开菜单就会触发
-        e.getPresentation().setEnabledAndVisible(false);
+//        e.getPresentation().setEnabledAndVisible(false);
         e.getPresentation().setEnabledAndVisible(e.getProject() != null && isJavaFile(e) );
         System.out.println("update");
-        if(e.getInputEvent() instanceof KeyEvent){
-            System.out.println("Action performed by shortcut");
-//            System.out.println("((KeyEvent)e).getKeyCode() = " + ((KeyEvent) e).getKeyCode());
+
+        if(e.getInputEvent() instanceof KeyEvent keyEvent){
+            System.out.println("Action may have been performed by a shortcut or direct keyboard input");
+            System.out.println("KeyEvent key code: " + keyEvent.getKeyCode());
         }
         if (isActionPerformedByMouseClick(e)) {
             System.out.println("Action performed by clicking button or using shortcut");
             // Proceed with your code here
+            isTestMethodSelected(e);
         } else {
             System.out.println("Action performed by other means");
             // Do nothing or handle the case accordingly
@@ -48,18 +50,15 @@ public class CaseAction extends AnAction {
         if (file == null || element == null) {
             return false;
         }
-        PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
+        if(!(element instanceof PsiMethod)){
+            return false;
+        }
+        PsiModifierList modifierList = ((PsiMethod)element).getModifierList();
+        boolean b = modifierList.hasAnnotation("org.junit.Test");
+        b |= modifierList.hasAnnotation("org.junit.jupiter.api.Test");
+        System.out.println("b = " + b);
+        return b;
 
-        return true;
-        // Find the method containing the current element
-//
-//        if (method == null) {
-//            return false;
-//        }
-//
-//        // Check if the method has @Test annotation
-//        PsiModifierList modifierList = method.getModifierList();
-//        return modifierList.hasAnnotation("org.junit.Test") || modifierList.hasAnnotation("org.testng.annotations.Test");
     }
     private boolean isActionPerformedByMouseClick(@NotNull AnActionEvent e) {
         return e.getInputEvent() instanceof MouseEvent;
