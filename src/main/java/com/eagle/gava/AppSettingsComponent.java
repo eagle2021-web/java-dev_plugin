@@ -38,7 +38,7 @@ public class AppSettingsComponent {
         JLabel tipLabel = new JLabel("", UIManager.getIcon("Tree.closedIcon"), SwingConstants.LEFT);
         tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
 
-        tipLabel.setToolTipText(DIV_TEMP.formatted(tip));
+        tipLabel.setToolTipText(DIV_TEMP.replace("$1", tip));
         tipLabel.setPreferredSize(new Dimension(TIP_ICON_WIDTH, HEIGHT));
         optionPanel.add(tipLabel);
 
@@ -54,14 +54,20 @@ public class AppSettingsComponent {
 
     public AppSettingsComponent() {
         // Initialize the table and its model
-        String[] columnNames = {"Column1", "Column2"};
+        String[] columnNames = {"select", "sss", "pett"};
         Icon addIcon = IconUtil.getAddIcon();
-        tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) {
+                    return Boolean.class; // The first column will contain checkboxes
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
         table = new JTable(tableModel);
-//        table.setPreferredSize();
-        // Add buttons to add and remove rows
         JButton addButton = new JButton(addIcon);
-        addButton.addActionListener(e -> tableModel.addRow(new Object[]{"", ""}));
+        addButton.addActionListener(e -> tableModel.addRow(new Object[]{false, "", ""}));
 
         Icon removeIcon = IconUtil.getRemoveIcon();
         JButton removeButton = new JButton(removeIcon);
@@ -72,30 +78,26 @@ public class AppSettingsComponent {
             }
         });
 
-        // Create a panel for the table and buttons
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(200, 50)); // Set preferred size for the table
 
         JPanel tablePanel = new JPanel(new BorderLayout());
         tablePanel.add(scrollPane, BorderLayout.CENTER);
         tablePanel.setPreferredSize(new Dimension(200, 200));
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(addButton);
-        buttonPanel.add(removeButton);
 
+        JPanel addRemoveJp = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        addButton.setPreferredSize(new Dimension(TIP_ICON_WIDTH, HEIGHT));
+        addRemoveJp.add(addButton);
+        removeButton.setPreferredSize(new Dimension(TIP_ICON_WIDTH, HEIGHT));
+        addRemoveJp.add(removeButton);
+        addRemoveJp.setPreferredSize(new Dimension(0, HEIGHT + 3));
         tablePanel.add(buttonPanel, BorderLayout.SOUTH);
-
-        // Add the table panel to the main panel
-//        setLayout(new BorderLayout());
-//        add(tablePanel, BorderLayout.CENTER);
-//        setPreferredSize(new Dimension(500, 300));
-
         JComponent panel44 = createJPanel1("MAX_TOKEN:", "The maximum number of tokens to be processed in a single request.");
 
         myMainPanel = FormBuilder.createFormBuilder()
                 .addComponent(panel44)
+                .addComponent(addRemoveJp)
                 .addComponent(tablePanel)
-//                .addComponent(buttonPanel)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
     }
