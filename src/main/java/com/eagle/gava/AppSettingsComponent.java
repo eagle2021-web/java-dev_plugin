@@ -9,6 +9,7 @@ import com.intellij.util.ui.FormBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.net.URL;
 import java.util.Arrays;
@@ -47,11 +48,41 @@ public class AppSettingsComponent {
         optionPanel.setPreferredSize(new Dimension(0, HEIGHT + 3));
         return optionPanel;
     }
-
+    private final DefaultTableModel tableModel;
+    private final JTable table;
     public AppSettingsComponent() {
+        // Initialize the table and its model
+        String[] columnNames = {"Column1", "Column2"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        table = new JTable(tableModel);
+
+        // Add buttons to add and remove rows
+        JButton addButton = new JButton("Add Row");
+        addButton.addActionListener(e -> tableModel.addRow(new Object[]{"", ""}));
+
+        JButton removeButton = new JButton("Remove Selected Row");
+        removeButton.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                tableModel.removeRow(selectedRow);
+            }
+        });
+
+        // Create a panel for the table and buttons
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(addButton);
+        buttonPanel.add(removeButton);
+
+        tablePanel.add(buttonPanel, BorderLayout.SOUTH);
+
         JComponent panel44 = createJPanel1("MAX_TOKEN:", "The maximum number of tokens to be processed in a single request. ");
+
         myMainPanel = FormBuilder.createFormBuilder()
                 .addComponent(panel44)
+                .addComponent(tablePanel)
                 .addComponentFillVertically(new JPanel(), 0).getPanel();
     }
 
