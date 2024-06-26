@@ -58,7 +58,7 @@ public class AppSettingsComponent {
         Icon addIcon = IconUtil.getAddIcon();
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
-
+//        table.setPreferredSize();
         // Add buttons to add and remove rows
         JButton addButton = new JButton(addIcon);
         addButton.addActionListener(e -> tableModel.addRow(new Object[]{"", ""}));
@@ -73,23 +73,32 @@ public class AppSettingsComponent {
         });
 
         // Create a panel for the table and buttons
-        JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(200, 50)); // Set preferred size for the table
 
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
+        tablePanel.setPreferredSize(new Dimension(200, 200));
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
         buttonPanel.add(removeButton);
 
         tablePanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        JComponent panel44 = createJPanel1("MAX_TOKEN:", "The maximum number of tokens to be processed in a single request. ");
+        // Add the table panel to the main panel
+//        setLayout(new BorderLayout());
+//        add(tablePanel, BorderLayout.CENTER);
+//        setPreferredSize(new Dimension(500, 300));
+
+        JComponent panel44 = createJPanel1("MAX_TOKEN:", "The maximum number of tokens to be processed in a single request.");
 
         myMainPanel = FormBuilder.createFormBuilder()
                 .addComponent(panel44)
                 .addComponent(tablePanel)
-                .addComponentFillVertically(new JPanel(), 0).getPanel();
+//                .addComponent(buttonPanel)
+                .addComponentFillVertically(new JPanel(), 0)
+                .getPanel();
     }
-
     private void updateCascadingComponents() {
         Object selectedItem = templateBox.getSelectedItem();
         System.out.println(temp.getItemCount());
