@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.EnumComboBoxModel;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.util.IconUtil;
 import com.intellij.util.ui.FormBuilder;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,17 +51,20 @@ public class AppSettingsComponent {
     }
     private final DefaultTableModel tableModel;
     private final JTable table;
+
     public AppSettingsComponent() {
         // Initialize the table and its model
         String[] columnNames = {"Column1", "Column2"};
+        Icon addIcon = IconUtil.getAddIcon();
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
 
         // Add buttons to add and remove rows
-        JButton addButton = new JButton("Add Row");
+        JButton addButton = new JButton(addIcon);
         addButton.addActionListener(e -> tableModel.addRow(new Object[]{"", ""}));
 
-        JButton removeButton = new JButton("Remove Selected Row");
+        Icon removeIcon = IconUtil.getRemoveIcon();
+        JButton removeButton = new JButton(removeIcon);
         removeButton.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
