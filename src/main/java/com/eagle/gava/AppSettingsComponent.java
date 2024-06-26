@@ -92,6 +92,8 @@ public class AppSettingsComponent {
         addRemoveJp.add(removeButton);
         addRemoveJp.setPreferredSize(new Dimension(0, HEIGHT + 3));
         tablePanel.add(buttonPanel, BorderLayout.SOUTH);
+
+
         JComponent panel44 = createJPanel1("MAX_TOKEN:", "The maximum number of tokens to be processed in a single request.");
 
         myMainPanel = FormBuilder.createFormBuilder()
@@ -100,20 +102,6 @@ public class AppSettingsComponent {
                 .addComponent(tablePanel)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
-    }
-    private void updateCascadingComponents() {
-        Object selectedItem = templateBox.getSelectedItem();
-        System.out.println(temp.getItemCount());
-        System.out.println(Arrays.toString(temp.getComponents()));
-
-        subTemplateBox.removeAllItems();
-        if ("A".equals(selectedItem)) {
-            subTemplateBox.addItem("AAAAAAAAAAAAAAAAAAAAA");
-            subTemplateBox.addItem("AAAAAAAAAAAAAAAAAAAAA2");
-        } else if ("B".equals(selectedItem)) {
-            subTemplateBox.addItem("BBBBBBBBBBBBBBBBB");
-            subTemplateBox.addItem("BBBBBBBBBBBBBBBBB2");
-        }
     }
 
     public JPanel getPanel() {

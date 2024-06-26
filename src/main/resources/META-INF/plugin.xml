@@ -14,9 +14,24 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-  ]]></description>
+        Enter short description for your plugin here.<br>
+        <em>most HTML tags may be used</em><br>
+        <a href="file://$PLUGIN_HOME$/CHANGELOG">View Changelog</a>
+    ]]></description>
+    <application-components>
+        <component>
+            <implementation-class>com.eagle.gava.MyApplicationComponent</implementation-class>
+        </component>
+    </application-components>
+    <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+    </change-notes>
+
+    <idea-plugin>
+        <change-notes>file://$MODULE_DIR$/CHANGELOG</change-notes>
+    </idea-plugin>
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
