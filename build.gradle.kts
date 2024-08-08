@@ -17,7 +17,15 @@ intellij {
     type.set("IC") // Target IDE Platform
     plugins.set(listOf("com.intellij.java"))
 }
+dependencies {
+    // Lombok for compiling
+    compileOnly("org.projectlombok:lombok:1.18.34")
 
+    // If you also want to use Lombok at runtime (for example, for some specific annotations),
+    // you can add this dependency too:
+    // annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    // runtimeOnly 'org.projectlombok:lombok:1.18.34'
+}
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {

@@ -10,7 +10,7 @@ import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
 import org.jetbrains.annotations.NotNull;
-
+import com.eagle.gava.render.RenderController;
 public class MyCaretListener implements CaretListener {
     private Editor editor;
 
@@ -36,5 +36,6 @@ public class MyCaretListener implements CaretListener {
             boolean isSet = TypeUtil.isSet(type);
             System.out.println("isSet = " + isSet);
         }
+        RenderController.avvv(editor);
     }
 }
