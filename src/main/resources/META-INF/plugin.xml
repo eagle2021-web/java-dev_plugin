@@ -26,35 +26,29 @@
         <change-notes>file://$MODULE_DIR$/CHANGELOG</change-notes>
     </idea-plugin>
     <depends>com.intellij.modules.platform</depends>
-
+    <depends>com.intellij.modules.lang</depends>
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable parentId="settings"
                                  instance="com.eagle.gava.AppSettingsConfigurable"
                                  id="com.eagle.gava.AppSettingsConfigurable"
                                  displayName="Java自学，面向AI编程"/>
         <applicationService serviceImplementation="com.eagle.gava.AppSettingsState"/>
-
-
-
-
-
+        <editorFactoryListener implementation="com.eagle.gava.listen.EditorListener"/>
     </extensions>
-
     <actions>
-
         <action id="AddFileAction"
                 class="com.eagle.gava.AddJavaFileAction"
                 text="Add File"
                 description="Adds a new Java file">
-            <add-to-group group-id="ProjectViewPopupMenu" />
+            <add-to-group group-id="ProjectViewPopupMenu"/>
         </action>
         <!-- Register the action in the editor popup menu for Java files -->
         <action id="MyPlugin.MyCustomAction"
                 class="com.eagle.gava.action.CaseAction"
                 text="My Custom Action"
                 description="Description for My Custom Action">
-            <add-to-group group-id="EditorPopupMenu" anchor="last" />
-            <keyboard-shortcut first-keystroke="control alt G" keymap="$default" />
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <keyboard-shortcut first-keystroke="control alt G" keymap="$default"/>
 
         </action>
 
