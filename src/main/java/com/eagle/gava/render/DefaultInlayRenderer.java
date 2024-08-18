@@ -45,14 +45,14 @@ public class DefaultInlayRenderer implements CopilotInlayRenderer {
         return this.inlay;
     }
 
-    public void setInlay(@NotNull Inlay<CopilotInlayRenderer> inlay) {
-        this.inlay = inlay;
-    }
+
 
     public @NotNull CopilotCompletionType getType() {
         return this.type;
     }
-
+    public void setInlay(@NotNull Inlay<CopilotInlayRenderer> inlay) {
+        this.inlay = inlay;
+    }
     public @NotNull List<String> getContentLines() {
         return this.lines;
     }

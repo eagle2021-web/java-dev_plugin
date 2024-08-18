@@ -12,4 +12,6 @@ public interface CopilotInlayRenderer extends EditorCustomElementRenderer {
     @Nullable Inlay<CopilotInlayRenderer> getInlay();
 
     @NotNull CopilotCompletionType getType();
+
+    void setInlay(@NotNull Inlay<CopilotInlayRenderer> inlay);
 }
