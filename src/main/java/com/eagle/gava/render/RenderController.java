@@ -15,14 +15,14 @@ public class RenderController {
     public static final Key<Editor> KEY_RENDER_EDITOR = Key.create("RenderEditor");
 
     public static void avvv(Editor editor){
-        List<String> lines = "aaaaaa\ndsfasdf".lines().toList();
+        List<String> lines = "’≈À…".lines().toList();
         DefaultInlayRenderer defaultInlayRenderer = new DefaultInlayRenderer(editor, new MyEditorRequest(), CopilotCompletionType.Inline, lines);
 
-        List<String> lines2 = "bbbbb\ndsfasdf".lines().toList();
+        List<String> lines2 = "¿Ó∞◊".lines().toList();
 
         DefaultInlayRenderer defaultInlayRenderer2 = new DefaultInlayRenderer(editor, new MyEditorRequest(), CopilotCompletionType.Block, lines2);
         InlayModel inlayModel = editor.getInlayModel();
-        inlayModel.addInlineElement(0, defaultInlayRenderer);
-        inlayModel.addInlineElement(100, defaultInlayRenderer2);
+        int offset = editor.getCaretModel().getOffset();
+        inlayModel.addInlineElement(offset, defaultInlayRenderer);
     }
 }

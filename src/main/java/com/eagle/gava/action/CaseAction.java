@@ -24,7 +24,6 @@ public class CaseAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent e) {
-        // 打开菜单就会触发
 //        e.getPresentation().setEnabledAndVisible(false);
         e.getPresentation().setEnabledAndVisible(e.getProject() != null && isJavaFile(e) );
         System.out.println("update");

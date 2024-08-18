@@ -1,5 +1,6 @@
 package com.eagle.gava.listen;
 
+import com.eagle.gava.service.EditorInternal;
 import com.eagle.gava.util.MethodUtil;
 import com.eagle.gava.util.TypeUtil;
 import com.intellij.openapi.editor.Editor;
@@ -11,8 +12,13 @@ import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiType;
 import org.jetbrains.annotations.NotNull;
 import com.eagle.gava.render.RenderController;
+
+import java.util.Optional;
+import java.util.concurrent.SubmissionPublisher;
+import java.util.function.Consumer;
+
 public class MyCaretListener implements CaretListener {
-    private Editor editor;
+    private final Editor editor;
 
     public MyCaretListener(Editor editor) {
         this.editor = editor;
@@ -36,6 +42,17 @@ public class MyCaretListener implements CaretListener {
             boolean isSet = TypeUtil.isSet(type);
             System.out.println("isSet = " + isSet);
         }
-        RenderController.avvv(editor);
+        SubmissionPublisher<PsiMethod> transform = EditorInternal.getInstance().getPublisher(editor);
+        boolean psiMethodPublished = EditorInternal.getInstance().isPsiMethodPublished(method);
+        if (psiMethodPublished) {
+            return;
+        }
+        EditorInternal.getInstance().setPsiMethodPublish(method);
+        System.out.println("-------");
+        Consumer<SubmissionPublisher<PsiMethod>> publisherConsumer = psiMethodSubmissionPublisher -> {
+            SubmissionPublisher<PsiMethod> publisher = EditorInternal.getInstance().getPublisher(editor);
+            publisher.submit(method);
+        };
+        Optional.ofNullable(transform).ifPresent(publisherConsumer);
     }
 }
