@@ -38,13 +38,13 @@ public class EditorListener implements EditorFactoryListener {
             @Override
             public void onNext(PsiMethod item) {
                 Transform _this = this;
-                new Task.Backgroundable(project, "张松在骚扰我") {
+                new Task.Backgroundable(project, "李果最爱的人不是我") {
                     @Override
                     public void run(@NotNull ProgressIndicator progressIndicator) {
                         System.out.println("------");
                         System.out.println("Thread.currentThread().getName() = " + Thread.currentThread().getName());
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }

@@ -82,7 +82,7 @@ public class DefaultInlayRenderer implements CopilotInlayRenderer {
     }
 
     static List<String> replaceLeadingTabs(@NotNull List<String> lines, @NotNull EditorRequest request) {
-        return (List)lines.stream().map((line) -> {
+        return lines.stream().map((line) -> {
             int tabCount = StringUtil.countChars(line, '\t', 0, true);
             if (tabCount > 0) {
                 String tabSpaces = StringUtil.repeatSymbol(' ', tabCount * request.getTabWidth());
@@ -94,7 +94,8 @@ public class DefaultInlayRenderer implements CopilotInlayRenderer {
     }
 
     private static @NotNull TextAttributes getTextAttributes(@NotNull Editor editor) {
-        Color userColor = Color.CYAN;
+//        Color userColor = Color.CYAN;
+        Color userColor = null;
         EditorColorsScheme scheme = editor.getColorsScheme();
         TextAttributes themeAttributes = scheme.getAttributes(DefaultLanguageHighlighterColors.INLAY_TEXT_WITHOUT_BACKGROUND);
         if (userColor == null && themeAttributes != null && themeAttributes.getForegroundColor() != null) {
