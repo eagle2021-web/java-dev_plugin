@@ -42,8 +42,6 @@ public class MyToolWindow implements ToolWindowFactory {
         JButton sendButton = new JButton("发送消息");
         sendButton.addActionListener(e -> {
             // 向 ConsoleView 发送消息
-            consoleView.print("hello\n", ConsoleViewContentType.NORMAL_OUTPUT);
-            printRedText(consoleView);
             SoleLogUtil log = project.getService(SoleLogUtil.class);
             log.info("info");
             log.error("error");
@@ -57,7 +55,8 @@ public class MyToolWindow implements ToolWindowFactory {
         // 右侧框框新增按钮，按钮点击后可以往consoleviw发送一个消息 hello
         splitPane.setRightComponent(rightPanel);
         splitPane.setDividerLocation(500); // 设置分隔条位置
-        splitPane.setDividerSize(1); // 设置分隔条宽度为5像素
+        splitPane.setDividerSize(3); // 设置分隔条宽度为5像素
+        splitPane.setContinuousLayout(true); // 使得在拖动分隔条时，左右面板会实时更新，从而实现更平滑的移动效果。
         // 将分割面板添加到主面板
         panel.add(splitPane, BorderLayout.CENTER);
 
@@ -67,15 +66,5 @@ public class MyToolWindow implements ToolWindowFactory {
         toolWindow.getContentManager().addContent(content);
     }
 
-    public void printRedText(ConsoleView consoleView) {
-        // 创建文本属性并设置前景色为红色
-        TextAttributes textAttributes = new TextAttributes();
-        textAttributes.setForegroundColor(Color.RED); // 设置前景色为红色
 
-        // 使用自定义的 ConsoleViewContentType
-        ConsoleViewContentType redOutputType = new ConsoleViewContentType("RED_OUTPUT", textAttributes);
-
-        // 打印红色文本
-        consoleView.print("hello\n", redOutputType);
-    }
 }
