@@ -36,6 +36,8 @@
         <editorFactoryListener implementation="com.eagle.gava.listen.EditorListener"/>
         <toolWindow id="myToolWindow" anchor="bottom" factoryClass="com.eagle.gava.window.MyToolWindow"
                     icon="/icons/toolwindow_icon.png" secondary="false"/>
+        <projectService  serviceImplementation="com.eagle.gava.window.WindowPanel"/>
+        <projectService  serviceImplementation="com.eagle.gava.util.SoleLogUtil"/>
     </extensions>
     <actions>
         <action id="AddFileAction"

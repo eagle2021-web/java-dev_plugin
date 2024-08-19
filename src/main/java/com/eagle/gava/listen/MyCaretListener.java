@@ -2,14 +2,12 @@ package com.eagle.gava.listen;
 
 import com.eagle.gava.service.EditorInternal;
 import com.eagle.gava.util.MethodUtil;
-import com.eagle.gava.util.TypeUtil;
+import com.eagle.gava.window.WindowPanel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.CaretEvent;
 import com.intellij.openapi.editor.event.CaretListener;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiParameterList;
-import com.intellij.psi.PsiType;
 import org.jetbrains.annotations.NotNull;
 import com.eagle.gava.render.RenderController;
 
@@ -64,11 +62,15 @@ public class MyCaretListener implements CaretListener {
         return strings;
     }
 
+    private void testUsed(Project project){
+        project.getService(WindowPanel.class).sss();
+    }
     @Override
     public void caretPositionChanged(@NotNull CaretEvent event) {
         publish();
 //        ArrayList<String> strings = new ArrayList<>();
         List<String> strings = createPoem();
         RenderController.renderLines(editor, strings);
+        testUsed(event.getEditor().getProject());
     }
 }
