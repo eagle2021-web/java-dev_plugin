@@ -34,6 +34,8 @@
                                  displayName="Java自学，面向AI编程"/>
         <applicationService serviceImplementation="com.eagle.gava.AppSettingsState"/>
         <editorFactoryListener implementation="com.eagle.gava.listen.EditorListener"/>
+        <toolWindow id="myToolWindow" anchor="bottom" factoryClass="com.eagle.gava.window.MyToolWindow"
+                    icon="/icons/toolwindow_icon.png" secondary="false"/>
     </extensions>
     <actions>
         <action id="AddFileAction"
