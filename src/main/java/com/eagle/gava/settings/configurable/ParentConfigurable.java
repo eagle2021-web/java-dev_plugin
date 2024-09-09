@@ -2,6 +2,7 @@ package com.eagle.gava.settings.configurable;
 
 import com.eagle.gava.AppSettingsComponent;
 import com.eagle.gava.settings.panel.ParentPanel;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -30,27 +31,41 @@ public class ParentConfigurable implements Configurable, SearchableConfigurable 
         return "My Plugin Settings";
     }
 
+
     @Nullable
     @Override
     public JComponent createComponent() {
-        myPanel = new JPanel(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        myPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
+        // 添加 helloLabel
         helloLabel = new JLabel("hello");
-        myPanel.add(helloLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gbc.gridx = 0; // 列索引
+        gbc.gridy = 0; // 行索引
+        gbc.weightx = 1; // 水平方向占用比例
+        gbc.weighty = 0; // 垂直方向占用比例
+        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平方向填充
+        myPanel.add(helloLabel, gbc);
 
-        linkLabel1 = new LinkLabel("https://www.example.com", null, new LinkListener() {
-            @Override
-            public void linkSelected(LinkLabel aSource, Object aLinkData) {
-                System.out.println("\"sout\" = " + "sout");
-            }
+        // 添加 linkLabel1
+        linkLabel1 = new LinkLabel("https://www.example.com", null, (aSource, aLinkData) -> {
         });
-        myPanel.add(linkLabel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gbc.gridy = 1; // 行索引
+        gbc.weighty = 0; // 垂直方向占用比例
+        myPanel.add(linkLabel1, gbc);
 
-        linkLabel2 = new LinkLabel();
-        myPanel.add(linkLabel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        // 添加 linkLabel2
+        linkLabel2 = new LinkLabel("sss", null, (aSource, aLinkData) -> {
+        });
+        gbc.gridy = 2; // 行索引
+        gbc.weighty = 0; // 垂直方向占用比例
+        myPanel.add(linkLabel2, gbc);
 
-        // 设置组件之间没有间隔
-        ((GridLayoutManager) myPanel.getLayout()).setVGap(0);
+        // 设置底部空白填充
+        gbc.gridy = 3; // 行索引
+        gbc.weighty = 1; // 垂直方向占用比例
+        gbc.fill = GridBagConstraints.BOTH; // 填充整个区域
+        myPanel.add(new JPanel(), gbc); // 添加一个空的面板以填充底部空间
 
         return myPanel;
     }
