@@ -36,7 +36,7 @@ public class AppSettingsComponent {
         preLabel.setPreferredSize(new Dimension(BOX_WIDTH, HEIGHT));
         optionPanel.add(preLabel);
         JLabel tipLabel = new JLabel("", UIManager.getIcon("Tree.closedIcon"), SwingConstants.LEFT);
-        tipLabel.setHorizontalTextPosition(SwingConstants.LEFT); // 设置文本在图标右边
+        tipLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 
         tipLabel.setToolTipText(DIV_TEMP.replace("$1", tip));
         tipLabel.setPreferredSize(new Dimension(TIP_ICON_WIDTH, HEIGHT));

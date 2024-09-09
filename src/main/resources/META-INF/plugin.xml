@@ -28,11 +28,18 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <extensions defaultExtensionNs="com.intellij">
-        <applicationConfigurable parentId="settings"
+        <applicationConfigurable parentId="com.eagle.gava.settings.configurable.ParentConfigurable"
                                  instance="com.eagle.gava.AppSettingsConfigurable"
                                  id="com.eagle.gava.AppSettingsConfigurable"
-                                 displayName="Java自学，面向AI编程"/>
+                                 displayName="sub"/>
+
+        <applicationConfigurable parentId="settings"
+                                 instance="com.eagle.gava.settings.configurable.ParentConfigurable"
+                                 id="com.eagle.gava.settings.configurable.ParentConfigurable"
+                                 displayName="Parent"/>
+
         <applicationService serviceImplementation="com.eagle.gava.AppSettingsState"/>
+
         <editorFactoryListener implementation="com.eagle.gava.listen.EditorListener"/>
         <toolWindow id="myToolWindow" anchor="bottom" factoryClass="com.eagle.gava.window.MyToolWindow"
                     icon="/icons/toolwindow_icon.png" secondary="false"/>

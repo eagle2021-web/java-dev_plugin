@@ -9,24 +9,23 @@ import com.intellij.psi.util.PsiUtil;
 
 public class TypeUtil {
     public static boolean isChildClassOf(PsiType psiType, String qualifiedName) {
-        // »ñÈ¡ psiType µÄ¶ÔÓ¦ PsiClass
+
         PsiClass psiClass = PsiUtil.resolveClassInType(psiType);
 
-        // Èç¹û psiClass Îª null£¬ËµÃ÷ psiType ²»ÊÇÒ»¸öÀàÀàĞÍ£¬Ö±½Ó·µ»Ø false
         if (psiClass == null) {
             return false;
         }
 
-        // »ñÈ¡Òª±È½ÏµÄÀà
+        // è·å–è¦æ¯”è¾ƒçš„ç±»
         GlobalSearchScope scope = GlobalSearchScope.allScope(psiClass.getProject());
         PsiClass targetClass = JavaPsiFacade.getInstance(psiClass.getProject()).findClass(qualifiedName, scope);
 
-        // Èç¹ûÄ¿±êÀà²»´æÔÚ£¬·µ»Ø false
+        // å¦‚æœç›®æ ‡ç±»ä¸å­˜åœ¨ï¼Œè¿”å› false
         if (targetClass == null) {
             return false;
         }
 
-        // ÅĞ¶Ï psiClass ÊÇ·ñÊÇ targetClass µÄ×ÓÀà
+        // åˆ¤æ–­ psiClass æ˜¯å¦æ˜¯ targetClass çš„å­ç±»
         return isSubclass(psiClass, targetClass);
     }
 
@@ -34,12 +33,12 @@ public class TypeUtil {
         if (child.equals(parent)) {
             return true;
         }
-        // ¼ì²é child ÊÇ·ñÊÇ parent µÄÖ±½Ó×ÓÀà
+        // æ£€æŸ¥ child æ˜¯å¦æ˜¯ parent çš„ç›´æ¥å­ç±»
         if (child.isInheritor(parent, true)) {
             return true;
         }
 
-        // ¼ì²é child µÄ³¬Àà
+        // æ£€æŸ¥ child çš„è¶…ç±»
         PsiClass superClass = child.getSuperClass();
         while (superClass != null) {
             if (superClass.isInheritor(parent, true)) {
