@@ -80,7 +80,9 @@ public class LightPanel {
         gbc.gridy++;
         JTextField jTextField3 = new JTextField();
         appendLineComp(gbc, root, "111222222", jTextField3);
-
+        gbc.gridy++;
+        JTextField jTextField4 = new JTextField();
+        appendLineComp(gbc, root, "11122222sdf的说法是地方速度f2", jTextField4);
         gbc.gridy++;
         JPasswordField jPasswordField = new JPasswordField();
         appendLineComp(gbc, root, "密碼：", jPasswordField);
