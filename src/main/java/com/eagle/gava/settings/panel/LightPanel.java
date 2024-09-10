@@ -2,6 +2,8 @@ package com.eagle.gava.settings.panel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LightPanel {
     private JPanel root;
@@ -75,9 +77,32 @@ public class LightPanel {
         appendLineComp(gbc, root, "密碼：", jPasswordField);
         jPasswordField.setColumns(30);
 
+        // 添加按钮
+        gbc.gridy++;
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.WEST;
+        JButton button = new JButton("发送请求");
+//        button.setPreferredSize(new Dimension(50, button.getPreferredSize().height));
+
+        root.add(button, gbc);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String address = JOptionPane.showInputDialog(root, "请输入地址：");
+                if (address != null && !address.isEmpty()) {
+                    // 这里模拟发送请求，实际应用中需替换为真实的请求逻辑
+                    JOptionPane.showMessageDialog(root, "发送请求到：" + address);
+                }
+            }
+        });
+
+
         gbc.gridy++;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
         root.add(new JPanel(), gbc);
+
+
     }
 }
