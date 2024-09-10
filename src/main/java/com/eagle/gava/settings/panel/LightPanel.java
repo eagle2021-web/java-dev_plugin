@@ -1,5 +1,7 @@
 package com.eagle.gava.settings.panel;
 
+import com.intellij.ui.components.JBCheckBox;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,25 +35,30 @@ public class LightPanel {
         return jPanel;
     }
 
-    protected void appendLineComp(GridBagConstraints gbc, JPanel root, String text, JTextField component) {
+    protected void appendLineComp(GridBagConstraints gbc, JPanel root, String text, JComponent component) {
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // 使组件填满单元格
+
+        // 创建 JLabel
         JLabel jLabel = new JLabel(text);
-        jLabel.setPreferredSize(new Dimension(60, jLabel.getPreferredSize().height));
+        jLabel.setBackground(Color.BLUE);
+        jLabel.setOpaque(true); // 确保背景颜色可见
+
+        // 设置第一列的组件
         gbc.gridx = 0;
-        gbc.weightx = 0.1;
+        gbc.weightx = 1.0; // 设置权重
+        gbc.insets = new Insets(5, 5, 5, 5); // 设置边距
+        jLabel.setPreferredSize(new Dimension(100, jLabel.getPreferredSize().height)); // 设置首选大小
         root.add(jLabel, gbc);
 
+        // 添加其他组件
         gbc.gridx = 1;
         gbc.weightx = 0.3;
-        // 设置固定宽度为 100 像素
-//        component.setPreferredSize(new Dimension(100, component.getPreferredSize().height));
-        component.setColumns(20);
         root.add(component, gbc);
 
-        gbc.fill = GridBagConstraints.REMAINDER;
+        gbc.gridx = 2;
         gbc.weightx = 0.5;
-        root.add(new JPanel(), gbc);
+        root.add(new JLabel(), gbc); // 如果不需要，可以考虑移除这一行
     }
 
     public void init() {
@@ -75,16 +82,20 @@ public class LightPanel {
         gbc.gridy++;
         JPasswordField jPasswordField = new JPasswordField();
         appendLineComp(gbc, root, "密碼：", jPasswordField);
-        jPasswordField.setColumns(30);
+//        jPasswordField.setColumns(30);
+        // 添加checkbox
+        gbc.gridy++;
+        gbc.gridx = 0;
+        JBCheckBox 冬天 = new JBCheckBox("冬天");
+        root.add(冬天, gbc);
 
         // 添加按钮
         gbc.gridy++;
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.WEST;
         JButton button = new JButton("发送请求");
-//        button.setPreferredSize(new Dimension(50, button.getPreferredSize().height));
 
-        root.add(button, gbc);
+//        root.add(button, gbc);
 
         button.addActionListener(new ActionListener() {
             @Override
