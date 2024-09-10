@@ -47,7 +47,7 @@ public class LightPanel {
         // 设置第一列的组件
         gbc.gridx = 0;
         gbc.weightx = 0.05; // 设置权重
-        gbc.insets = new Insets(5, 5, 5, 5); // 设置边距
+//        gbc.insets = new Insets(5, 5, 5, 5); // 设置边距
 //        jLabel.setPreferredSize(new Dimension(40,jLabel.getPreferredSize().height)); // 设置首选大小
 
         root.add(jLabel, gbc);
@@ -82,7 +82,7 @@ public class LightPanel {
         appendLineComp(gbc, root, "111222222", jTextField3);
         gbc.gridy++;
         JTextField jTextField4 = new JTextField();
-        appendLineComp(gbc, root, "11122222sdf的说法是地方速度f2", jTextField4);
+        appendLineComp(gbc, root, "11122222s度f2", jTextField4);
         gbc.gridy++;
         JPasswordField jPasswordField = new JPasswordField();
         appendLineComp(gbc, root, "密碼：", jPasswordField);
@@ -113,7 +113,23 @@ public class LightPanel {
             }
         });
 
+        JPanel jPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        jPanel.add(new JCheckBox("冬天"));
+        jPanel.add(new JCheckBox("冬天"));
 
+
+        gbc.gridx = -1;
+        gbc.gridy++;
+        gbc.weightx = 0.05; // 设置权重
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        root.add(jPanel, gbc);
+
+        gbc.gridy++;
+        root.add(new JCheckBox("冬季"), gbc);
+        root.add(new JCheckBox("冬季"), gbc);
+        root.add(new JCheckBox("冬季"), gbc);
+        root.add(new JCheckBox("冬季"), gbc);
+        root.add(new JCheckBox("冬季"), gbc);
         gbc.gridy++;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
