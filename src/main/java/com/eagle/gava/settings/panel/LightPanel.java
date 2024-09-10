@@ -85,7 +85,24 @@ public class LightPanel {
         appendLineComp(gbc, root, "11122222s度f2", jTextField4);
         gbc.gridy++;
         JPasswordField jPasswordField = new JPasswordField();
+
         appendLineComp(gbc, root, "密碼：", jPasswordField);
+        gbc.gridy++;
+        JButton button222 = new JButton("提交");
+
+        // 添加 ActionListener
+        button222.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 获取密码
+                char[] password = jPasswordField.getPassword();
+                // 将字符数组转换为字符串
+                String passwordString = new String(password);
+                // 打印密码
+                System.out.println("输入的密码是: " + passwordString);
+            }
+        });
+        root.add(button222, gbc);
 //        jPasswordField.setColumns(30);
         // 添加checkbox
         gbc.gridy++;
