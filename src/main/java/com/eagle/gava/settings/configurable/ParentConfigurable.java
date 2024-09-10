@@ -2,6 +2,7 @@ package com.eagle.gava.settings.configurable;
 
 import com.eagle.gava.AppSettingsComponent;
 import com.eagle.gava.settings.panel.ParentPanel;
+import com.intellij.execution.process.KillableProcessHandler;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;

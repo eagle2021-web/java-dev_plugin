@@ -33,6 +33,11 @@
                                  id="com.eagle.gava.AppSettingsConfigurable"
                                  displayName="sub"/>
 
+        <applicationConfigurable parentId="Parent"
+                                 instance="com.eagle.gava.settings.configurable.LightConfigurable"
+                                 id="com.eagle.gava.settings.configurable.LightConfigurable"
+                                 displayName="Light"/>
+
         <applicationConfigurable parentId="settings"
                                  instance="com.eagle.gava.settings.configurable.ParentConfigurable"
                                  id="com.eagle.gava.settings.configurable.ParentConfigurable"
