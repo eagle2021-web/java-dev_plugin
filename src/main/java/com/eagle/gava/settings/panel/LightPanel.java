@@ -46,14 +46,16 @@ public class LightPanel {
 
         // 设置第一列的组件
         gbc.gridx = 0;
-        gbc.weightx = 1.0; // 设置权重
+        gbc.weightx = 0.05; // 设置权重
         gbc.insets = new Insets(5, 5, 5, 5); // 设置边距
-        jLabel.setPreferredSize(new Dimension(100, jLabel.getPreferredSize().height)); // 设置首选大小
+//        jLabel.setPreferredSize(new Dimension(40,jLabel.getPreferredSize().height)); // 设置首选大小
+
         root.add(jLabel, gbc);
 
         // 添加其他组件
         gbc.gridx = 1;
-        gbc.weightx = 0.3;
+        gbc.weightx = 0.5;
+        component.setPreferredSize(new Dimension(200,component.getPreferredSize().height)); // 设置首选大小
         root.add(component, gbc);
 
         gbc.gridx = 2;
@@ -86,6 +88,7 @@ public class LightPanel {
         // 添加checkbox
         gbc.gridy++;
         gbc.gridx = 0;
+        gbc.weightx = 0.1; // 设置权重
         JBCheckBox 冬天 = new JBCheckBox("冬天");
         root.add(冬天, gbc);
 
@@ -95,7 +98,7 @@ public class LightPanel {
         gbc.fill = GridBagConstraints.WEST;
         JButton button = new JButton("发送请求");
 
-//        root.add(button, gbc);
+        root.add(button, gbc);
 
         button.addActionListener(new ActionListener() {
             @Override
