@@ -1,40 +1,25 @@
 package com.eagle.gava.service;
 
-import com.eagle.gava.util.SoleLogUtil;
-import com.eagle.gava.window.WindowPanel;
 import com.intellij.execution.ExecutionException;
-import com.intellij.execution.Executor;
 import com.intellij.execution.KillableProcess;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.execution.process.KillableProcessHandler;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessListener;
-import com.intellij.execution.ui.ConsoleView;
-import com.intellij.execution.ui.ConsoleViewContentType;
-import com.intellij.execution.ui.RunContentDescriptor;
-import com.intellij.execution.ui.RunContentManager;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Key;
-import com.intellij.openapi.util.NlsActions;
 import lombok.Getter;
 import lombok.Setter;
-import org.jdesktop.swingx.util.WindowUtils;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.io.*;
 
 @Service(Service.Level.PROJECT)
 public class WebStartService implements Disposable {
     private final Project project;
     @Getter
     @Setter
-    private KillableProcessHandler handler;
+    private KillableProcessHandler processHandler;
     public WebStartService(Project project) {
         System.out.println("WebStartService");
         this.project = project;
@@ -47,8 +32,8 @@ public class WebStartService implements Disposable {
         GeneralCommandLine commandLine = new GeneralCommandLine();
         commandLine.setExePath("d:/bin/hello_web.exe");
         try {
-            handler = new KillableProcessHandler(commandLine);
-            handler.startNotify(); // 启动进程
+            processHandler = new KillableProcessHandler(commandLine);
+            processHandler.startNotify(); // 启动进程
             // 创建控制台视图
 
 
@@ -94,20 +79,34 @@ public class WebStartService implements Disposable {
 
     @Override
     public void dispose(){
-        // 实现哪个接口可以有这个方法
-        if(handler != null){
-            if (handler.canKillProcess()) {
-                System.out.println("-11");
-                handler.killProcess();;
-                // 等待进程完全结束
-                handler.waitFor();
-                System.out.println("handler.canKillProcess() = " + handler.canKillProcess());
-                if (handler.canKillProcess()) {
-                    System.out.println("-222");
-                    handler.killProcess();
+
+        if (processHandler instanceof KillableProcess) {
+            System.out.println("------sssss");
+            KillableProcess killableProcess = (KillableProcess) processHandler;
+            if (killableProcess.canKillProcess()) {
+                if (!processHandler.waitFor(1000L)) {
+                    // doing 'force quite'
+                    System.out.println("kkkkkk");
+                    processHandler.getProcess().destroyForcibly();
+                    processHandler.killProcess();
+                    System.out.println("killableProcess.canKillProcess() = " + killableProcess.canKillProcess());
                 }
             }
-            handler = null;
         }
+//        // 实现哪个接口可以有这个方法
+//        if(processHandler != null){
+//            if (processHandler.canKillProcess()) {
+//                System.out.println("-11");
+//                processHandler.killProcess();;
+//                // 等待进程完全结束
+//                processHandler.waitFor();
+//                System.out.println("handler.canKillProcess() = " + processHandler.canKillProcess());
+//                if (processHandler.canKillProcess()) {
+//                    System.out.println("-222");
+//                    processHandler.killProcess();
+//                }
+//            }
+//            processHandler = null;
+//        }
     }
 }
