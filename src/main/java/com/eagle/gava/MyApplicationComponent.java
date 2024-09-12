@@ -16,6 +16,7 @@ public class MyApplicationComponent implements ApplicationComponent {
 
     @Override
     public void initComponent() {
+        System.out.println("_----------");
         // 读取变更日志文件
         try (InputStream is = MyApplicationComponent.class.getResourceAsStream("CHANGELOG")) {
             if (is != null) {

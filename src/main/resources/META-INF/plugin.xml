@@ -50,6 +50,7 @@
                     icon="/icons/toolwindow_icon.png" secondary="false"/>
         <projectService  serviceImplementation="com.eagle.gava.window.WindowPanel"/>
         <projectService  serviceImplementation="com.eagle.gava.util.SoleLogUtil"/>
+        <postStartupActivity implementation="com.eagle.gava.active.MyRefactoringEventListener$MyStartupActivity"/>
     </extensions>
     <actions>
         <action id="AddFileAction"
