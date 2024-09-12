@@ -7,6 +7,7 @@ import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.project.Project;
+import lombok.Getter;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Service(Service.Level.PROJECT)
 public class SoleLogUtil {
     private Project project;
+    @Getter
     private ConsoleView consoleView;
 
     public SoleLogUtil(Project project) {

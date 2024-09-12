@@ -1,5 +1,6 @@
 package com.eagle.gava.active;
 
+import com.eagle.gava.service.WebStartService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.StartupActivity;
 import com.intellij.refactoring.listeners.RefactoringEventData;
@@ -48,6 +49,7 @@ public class MyRefactoringEventListener implements RefactoringEventListener {
         public void runActivity(@NotNull Project project) {
             MyRefactoringEventListener listener = new MyRefactoringEventListener(project);
             System.out.println("project = " + project);
+            project.getService(WebStartService.class).startWeb();
         }
     }
 }
