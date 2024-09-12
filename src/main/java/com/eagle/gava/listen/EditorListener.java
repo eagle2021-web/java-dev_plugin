@@ -1,6 +1,7 @@
 package com.eagle.gava.listen;
 
 import com.eagle.gava.service.EditorInternal;
+import com.eagle.gava.util.BundleUtil;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ReadAction;
@@ -84,7 +85,8 @@ public class EditorListener implements EditorFactoryListener {
         }
 
         publishPsiMethodTask(editor);
-
+        String message = BundleUtil.message("hello.world");
+        System.out.println("message = " + message);
         // 这行代码创建了一个名为 editorDisposable 的可丢弃对象，并为其指定了一个标识字符串 "eagleEditorListener" 。
         Disposable editorDisposable = Disposer.newDisposable("eagleEditorListener");
         // 这行代码可能是使用 EditorUtil 类中的方法，将 editor 和 editorDisposable 关联起来，以进行某种资源的释放或清理操作。
