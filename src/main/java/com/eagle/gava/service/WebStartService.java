@@ -14,12 +14,15 @@ import com.intellij.openapi.util.Key;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 @Service(Service.Level.PROJECT)
 public class WebStartService implements Disposable {
     private final Project project;
     @Getter
     @Setter
-    private KillableProcessHandler processHandler;
+    private Process process;
     public WebStartService(Project project) {
         System.out.println("WebStartService");
         this.project = project;
@@ -32,81 +35,31 @@ public class WebStartService implements Disposable {
         GeneralCommandLine commandLine = new GeneralCommandLine();
         commandLine.setExePath("d:/bin/hello_web.exe");
         try {
-            processHandler = new KillableProcessHandler(commandLine);
-            processHandler.startNotify(); // 启动进程
-            // 创建控制台视图
-
-
-            // 创建可杀死的进程处理器
-            KillableProcessHandler handler = new KillableProcessHandler(commandLine);
-
-            // 启动进程并通知控制台
-            handler.startNotify();
-//            handler.getProcessInput().
-
-            // 添加进程监听器
-            handler.addProcessListener(new ProcessListener() {
-                @Override
-                public void startNotified(ProcessEvent event) {
-                    System.out.println("Process started22222.\\n");
-                }
-
-                @Override
-                public void onTextAvailable(ProcessEvent event, Key outputType) {
-                    System.out.println("event.getText() = " + event.getText());
-                    System.out.println("outputType = " + outputType);
-//                    consoleView.print(event.getText(), ConsoleViewContentType.NORMAL_OUTPUT);
-                }
-
-                @Override
-                public void processTerminated(ProcessEvent event) {
-                    System.out.println("event.getText() = " + event.getText());
-//                    consoleView.print("Process terminated with exit code: " + event.getExitCode() + "\\n", ConsoleViewContentType.SYSTEM_OUTPUT);
-                }
-
-                @Override
-                public void processWillTerminate(ProcessEvent event, boolean willBeDestroyed) {
-                    System.out.println("event.getText() = " + event.getText());
-//                    consoleView.print("Process will terminate.\\n", ConsoleViewContentType.SYSTEM_OUTPUT);
-                }
-            });
-        } catch (ExecutionException e) {
-            Messages.showErrorDialog(project, "启动进程失败: " + e.getMessage(), "错误");
-            e.printStackTrace();
+            process = new ProcessBuilder("d:/bin/hello_web.exe").start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
-
     @Override
-    public void dispose(){
-
-        if (processHandler instanceof KillableProcess) {
-            System.out.println("------sssss");
-            KillableProcess killableProcess = (KillableProcess) processHandler;
-            if (killableProcess.canKillProcess()) {
-                if (!processHandler.waitFor(1000L)) {
-                    // doing 'force quite'
-                    System.out.println("kkkkkk");
-                    processHandler.getProcess().destroyForcibly();
-                    processHandler.killProcess();
-                    System.out.println("killableProcess.canKillProcess() = " + killableProcess.canKillProcess());
+    public void dispose() {
+        if (process != null) {
+            try {
+                // 尝试杀死进程
+                process.destroy();
+                // 等待进程完全结束
+                if (process.waitFor() == 0) {
+                    System.out.println("进程已成功终止");
+                } else {
+                    System.out.println("进程未能终止，尝试强制杀死");
+                    // 强制杀死进程
+                    Runtime.getRuntime().exec("taskkill /F /PID " + process.pid());
                 }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            } finally {
+                process = null;
             }
         }
-//        // 实现哪个接口可以有这个方法
-//        if(processHandler != null){
-//            if (processHandler.canKillProcess()) {
-//                System.out.println("-11");
-//                processHandler.killProcess();;
-//                // 等待进程完全结束
-//                processHandler.waitFor();
-//                System.out.println("handler.canKillProcess() = " + processHandler.canKillProcess());
-//                if (processHandler.canKillProcess()) {
-//                    System.out.println("-222");
-//                    processHandler.killProcess();
-//                }
-//            }
-//            processHandler = null;
-//        }
     }
 }
