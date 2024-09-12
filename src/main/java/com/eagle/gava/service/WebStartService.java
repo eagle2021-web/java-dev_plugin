@@ -43,10 +43,11 @@ public class WebStartService implements Disposable {
     public void startWeb() {
         GeneralCommandLine commandLine = new GeneralCommandLine();
         commandLine.setExePath("d:/bin/hello_web.exe");
+        ConsoleView consoleView = project.getService(WindowPanel.class).getConsoleView();
         try {
             handler = new KillableProcessHandler(commandLine);
             handler.startNotify(); // 启动进程
-//            handler.setShouldKillProcessSoftly(true);
+            handler.setShouldKillProcessSoftly(true);
 
             // 添加进程监听器
             handler.addProcessListener(new ProcessListener() {
@@ -58,6 +59,7 @@ public class WebStartService implements Disposable {
                 @Override
                 public void onTextAvailable(ProcessEvent event, Key outputType) {
                     System.out.println("Output: " + event.getText());
+                    consoleView.print(event.getText(), ConsoleViewContentType.LOG_INFO_OUTPUT);
                 }
 
                 @Override
@@ -81,7 +83,7 @@ public class WebStartService implements Disposable {
         if (handler != null) {
             if (handler.canKillProcess()) {
                 handler.killProcess(); // 尝试杀死进程
-//                handler.waitFor(); // 等待进程结束
+                handler.waitFor(); // 等待进程结束
                 System.out.println("handler.canKillProcess() = " + handler.canKillProcess());
             }
             handler = null; // 清理 handler 引用
