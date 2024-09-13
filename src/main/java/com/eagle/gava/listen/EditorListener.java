@@ -28,6 +28,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.SubmissionPublisher;
 
 public class EditorListener implements EditorFactoryListener {
+    Disposable editorDisposable = Disposer.newDisposable("eagleEditorListener");
 
     private void publishPsiMethodTask(@NotNull Editor editor) {
         Project project = editor.getProject();
@@ -68,6 +69,8 @@ public class EditorListener implements EditorFactoryListener {
 
         psiMethodSubmissionPublisher.subscribe(transformOne);
         transformOne.subscribe(transformTwo);
+        // 在 dispose 方法中清除订阅
+
     }
 
     @Override
@@ -88,10 +91,9 @@ public class EditorListener implements EditorFactoryListener {
         String message = BundleUtil.message("hello.world");
         System.out.println("message = " + message);
         // 这行代码创建了一个名为 editorDisposable 的可丢弃对象，并为其指定了一个标识字符串 "eagleEditorListener" 。
-        Disposable editorDisposable = Disposer.newDisposable("eagleEditorListener");
+
         // 这行代码可能是使用 EditorUtil 类中的方法，将 editor 和 editorDisposable 关联起来，以进行某种资源的释放或清理操作。
         EditorUtil.disposeWithEditor(editor, editorDisposable);
-
 
         // 这部分使用 ApplicationManager 获取应用程序对象，并通过 invokeLater 方法进行异步操作。在异步操作中，
         // 为 editor 的光标模型添加了一个 CaretListener（可能用于监听光标的位置变化等事件），并再次使用了 editorDisposable 。

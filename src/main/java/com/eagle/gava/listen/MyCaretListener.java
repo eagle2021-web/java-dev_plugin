@@ -63,7 +63,7 @@ public class MyCaretListener implements CaretListener {
     }
 
     private void testUsed(Project project){
-        project.getService(WindowPanel.class).sss();
+
     }
     @Override
     public void caretPositionChanged(@NotNull CaretEvent event) {
