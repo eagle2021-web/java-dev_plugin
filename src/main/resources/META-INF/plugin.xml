@@ -59,18 +59,22 @@
                 class="com.eagle.gava.AddJavaFileAction"
                 text="Add File"
                 description="Adds a new Java file">
-            <add-to-group group-id="ProjectViewPopupMenu"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
         </action>
         <!-- Register the action in the editor popup menu for Java files -->
         <action id="MyPlugin.MyCustomAction"
                 class="com.eagle.gava.action.CaseAction"
                 text="My Custom Action"
                 description="Description for My Custom Action">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <keyboard-shortcut first-keystroke="control alt G" keymap="$default"/>
 
         </action>
-
+        <action id="com.eagle.gava.action.AddHelloAction" class="com.eagle.gava.action.AddHelloAction"
+                text="EAGLE:AddHelloAction" description="AddHelloAction">
+            <keyboard-shortcut first-keystroke="control alt A" keymap="$default"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
 
     </actions>
 </idea-plugin>

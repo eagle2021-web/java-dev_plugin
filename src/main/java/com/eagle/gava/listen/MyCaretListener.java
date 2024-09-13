@@ -1,5 +1,6 @@
 package com.eagle.gava.listen;
 
+import com.eagle.gava.factory.FieldFactory;
 import com.eagle.gava.service.EditorInternal;
 import com.eagle.gava.util.MethodUtil;
 import com.eagle.gava.window.WindowPanel;
@@ -30,7 +31,7 @@ public class MyCaretListener implements CaretListener {
         if (method == null) {
             return;
         }
-
+//        FieldFactory.getInstance(method.getProject()).createHelloMethod(method.getContainingClass());
 //        SubmissionPublisher<PsiMethod> transform = EditorInternal.getInstance().getPublisher(editor);
 //        boolean psiMethodPublished = EditorInternal.getInstance().isPsiMethodPublished(method);
 //        if (psiMethodPublished) {
@@ -69,8 +70,8 @@ public class MyCaretListener implements CaretListener {
     public void caretPositionChanged(@NotNull CaretEvent event) {
         publish();
 //        ArrayList<String> strings = new ArrayList<>();
-        List<String> strings = createPoem();
-        RenderController.renderLines(editor, strings);
-        testUsed(event.getEditor().getProject());
+//        List<String> strings = createPoem();
+//        RenderController.renderLines(editor, strings);
+//        testUsed(event.getEditor().getProject());
     }
 }
