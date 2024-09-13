@@ -1,9 +1,13 @@
 package com.eagle.gava.window;
 
+import com.eagle.gava.action.SettingShowAction;
 import com.eagle.gava.util.SoleLogUtil;
 import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.ActionToolbar;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
@@ -11,6 +15,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+
 import org.jdesktop.swingx.util.WindowUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,9 +35,14 @@ public class MyToolWindow implements ToolWindowFactory {
 
         // 创建 ConsoleView
         ConsoleView consoleView = service.getConsoleView();
+        DefaultActionGroup defaultActionGroup = new DefaultActionGroup();
+        SettingShowAction settingShowAction = new SettingShowAction();
+        defaultActionGroup.add(settingShowAction);
+        ActionToolbar toobar = ActionManager.getInstance().createActionToolbar("toobar", defaultActionGroup, false);
+        toobar.setTargetComponent(panel);
 
-        // 创建 JTextArea
-
+//        我希望在左侧烂新增一个按钮，点击后可以直接打开面板，定位到
+        panel.add(toobar.getComponent(), BorderLayout.WEST);
 
         // 将 ConsoleView 和 JTextArea 分别放入左侧和右侧
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);

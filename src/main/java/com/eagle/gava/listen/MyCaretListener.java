@@ -31,18 +31,18 @@ public class MyCaretListener implements CaretListener {
             return;
         }
 
-        SubmissionPublisher<PsiMethod> transform = EditorInternal.getInstance().getPublisher(editor);
-        boolean psiMethodPublished = EditorInternal.getInstance().isPsiMethodPublished(method);
-        if (psiMethodPublished) {
-            return;
-        }
-        EditorInternal.getInstance().setPsiMethodPublish(method);
-        System.out.println("-------");
-        Consumer<SubmissionPublisher<PsiMethod>> publisherConsumer = psiMethodSubmissionPublisher -> {
-            SubmissionPublisher<PsiMethod> publisher = EditorInternal.getInstance().getPublisher(editor);
-            publisher.submit(method);
-        };
-        Optional.ofNullable(transform).ifPresent(publisherConsumer);
+//        SubmissionPublisher<PsiMethod> transform = EditorInternal.getInstance().getPublisher(editor);
+//        boolean psiMethodPublished = EditorInternal.getInstance().isPsiMethodPublished(method);
+//        if (psiMethodPublished) {
+//            return;
+//        }
+//        EditorInternal.getInstance().setPsiMethodPublish(method);
+//        System.out.println("-------");
+//        Consumer<SubmissionPublisher<PsiMethod>> publisherConsumer = psiMethodSubmissionPublisher -> {
+//            SubmissionPublisher<PsiMethod> publisher = EditorInternal.getInstance().getPublisher(editor);
+//            publisher.submit(method);
+//        };
+//        Optional.ofNullable(transform).ifPresent(publisherConsumer);
     }
 
     private static List<String> createPoem() {
