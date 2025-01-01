@@ -26,7 +26,7 @@ public class MyCaretListener implements CaretListener {
     }
 
     private void publish() {
-        System.out.println("editor = " + editor);
+//        System.out.println("editor = " + editor);
         PsiMethod method = MethodUtil.getPsiMethodAtCaret(editor);
         if (method == null) {
             return;

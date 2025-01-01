@@ -47,9 +47,9 @@ public class MyRefactoringEventListener implements RefactoringEventListener {
          */
         @Override
         public void runActivity(@NotNull Project project) {
-            MyRefactoringEventListener listener = new MyRefactoringEventListener(project);
-            System.out.println("project = " + project);
-            project.getService(WebStartService.class).startWeb();
+//            MyRefactoringEventListener listener = new MyRefactoringEventListener(project);
+//            System.out.println("project = " + project);
+//            project.getService(WebStartService.class).startWeb();
         }
     }
 }

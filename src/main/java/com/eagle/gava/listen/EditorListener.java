@@ -4,8 +4,6 @@ import com.eagle.gava.service.EditorInternal;
 import com.eagle.gava.util.BundleUtil;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.*;
@@ -16,15 +14,9 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.SubmissionPublisher;
 
 public class EditorListener implements EditorFactoryListener {
@@ -101,6 +93,7 @@ public class EditorListener implements EditorFactoryListener {
         // 就可能会采用这样的代码结构。这样可以确保资源的合理管理和界面操作的流畅性。
         ApplicationManager.getApplication().invokeLater(() -> {
             editor.getCaretModel().addCaretListener(new MyCaretListener(editor), editorDisposable);
+            editor.addEditorMouseListener(new MyMouseListener(), editorDisposable);
         });
     }
 

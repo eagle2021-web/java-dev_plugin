@@ -56,7 +56,7 @@
     </extensions>
     <actions>
         <action id="AddFileAction"
-                class="com.eagle.gava.AddJavaFileAction"
+                class="com.eagle.gava.action.AddJavaFileAction"
                 text="Add File"
                 description="Adds a new Java file">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
@@ -69,6 +69,12 @@
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <keyboard-shortcut first-keystroke="control alt G" keymap="$default"/>
 
+        </action>
+        <action id="com.eagle.gava.action.AltMouseAction"
+                class="com.eagle.gava.action.AltMouseAction"
+                text="alt mouse"
+                description="Daaa">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
         <action id="com.eagle.gava.action.AddHelloAction" class="com.eagle.gava.action.AddHelloAction"
                 text="EAGLE:AddHelloAction" description="AddHelloAction">
