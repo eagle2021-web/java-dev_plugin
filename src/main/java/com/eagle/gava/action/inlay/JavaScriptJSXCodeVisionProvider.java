@@ -47,6 +47,8 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
         default Icon getIcon() {
             return null;
         }
+
+        boolean shouldClick();
     }
 
     @Nullable
@@ -65,7 +67,7 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
                     return true;
                 }
                 List<InlResult> hints = new SmartList<>();
-                String usagesHint = "abc";
+                String usagesHint = "李果是個大帥哥";
                 if (usagesHint != null) {
                     hints.add(new InlResult() {
                         @Override
@@ -76,7 +78,12 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
                         @NotNull
                         @Override
                         public String getRegularText() {
-                            return "        "; // 鎬庝箞璁╄繖閲屽彧濉厖8涓瓧绗︼紝鍙互onclick
+                            return "        "; //
+                        }
+
+                        @Override
+                        public boolean shouldClick() {
+                            return false;
                         }
                     });
                     hints.add(new InlResult() {
@@ -89,6 +96,11 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
                         @Override
                         public String getRegularText() {
                             return usagesHint;
+                        }
+
+                        @Override
+                        public boolean shouldClick() {
+                            return true;
                         }
                     });
 
@@ -103,11 +115,11 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
                     int startOffset = document.getLineStartOffset(line);
                     int column = offset - startOffset;
                     List<InlayPresentation> presentations = new SmartList<>();
+
                     for (InlResult inlResult : hints) {
                         if (inlResult.getIcon() != null) {
                             presentations.add(factory.icon(inlResult.getIcon()));//));
                         }
-
                         presentations.add(createPresentation(factory, element, editor, inlResult));
                     }
                     SequencePresentation shiftedPresentation = new SequencePresentation(presentations);
@@ -131,9 +143,12 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
                                                         @NotNull Editor editor,
                                                         @NotNull InlResult result) {
         InlayPresentation text = factory.smallText(result.getRegularText());
-
+        if (!result.shouldClick()) {
+            return text;
+        }
         return factory.referenceOnHover(text, (event, translated) -> result.onClick(editor, element, event));
     }
+
 
     // Add Settings to inlay context menu
     private static @NotNull InlayPresentation addSettings(@NotNull Project project,
