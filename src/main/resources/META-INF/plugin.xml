@@ -28,6 +28,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.inlayProvider language="JAVA" implementationClass="com.eagle.gava.action.inlay.JavaScriptJSXCodeVisionProvider"/>
         <applicationConfigurable parentId="com.eagle.gava.settings.configurable.ParentConfigurable"
                                  instance="com.eagle.gava.AppSettingsConfigurable"
                                  id="com.eagle.gava.AppSettingsConfigurable"

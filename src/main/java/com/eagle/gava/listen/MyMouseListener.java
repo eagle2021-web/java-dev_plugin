@@ -20,6 +20,7 @@ public class MyMouseListener implements EditorMouseListener {
             if (mouseEvent.isAltDown() && mouseEvent.getButton() == MouseEvent.BUTTON1) {
                 System.out.println("hello222");
             }
+            Editor editor = e.getEditor();
         }
         System.out.println("other222");
     }
