@@ -9,6 +9,9 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.*;
 import com.intellij.openapi.editor.ex.util.EditorUtil;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.fileEditor.TextEditor;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
@@ -32,7 +35,7 @@ public class EditorListener implements EditorFactoryListener {
             @Override
             public void onNext(PsiMethod item) {
                 Transform _this = this;
-                new Task.Backgroundable(project, "æŽæžœæœ€çˆ±çš„äººä¸æ˜¯æˆ‘") {
+                new Task.Backgroundable(project, "Àî¹û×î°®µÄÈË²»ÊÇÎÒ") {
                     @Override
                     public void run(@NotNull ProgressIndicator progressIndicator) {
                         System.out.println("------");
@@ -61,7 +64,7 @@ public class EditorListener implements EditorFactoryListener {
 
         psiMethodSubmissionPublisher.subscribe(transformOne);
         transformOne.subscribe(transformTwo);
-        // åœ¨ dispose æ–¹æ³•ä¸­æ¸…é™¤è®¢é˜…
+        // ÔÚ dispose ·½·¨ÖÐÇå³ý¶©ÔÄ
 
     }
 
@@ -82,15 +85,15 @@ public class EditorListener implements EditorFactoryListener {
         publishPsiMethodTask(editor);
         String message = BundleUtil.message("hello.world");
         System.out.println("message = " + message);
-        // è¿™è¡Œä»£ç åˆ›å»ºäº†ä¸€ä¸ªåä¸º editorDisposable çš„å¯ä¸¢å¼ƒå¯¹è±¡ï¼Œå¹¶ä¸ºå…¶æŒ‡å®šäº†ä¸€ä¸ªæ ‡è¯†å­—ç¬¦ä¸² "eagleEditorListener" ã€‚
+        // ÕâÐÐ´úÂë´´½¨ÁËÒ»¸öÃûÎª editorDisposable µÄ¿É¶ªÆú¶ÔÏó£¬²¢ÎªÆäÖ¸¶¨ÁËÒ»¸ö±êÊ¶×Ö·û´® "eagleEditorListener" ¡£
 
-        // è¿™è¡Œä»£ç å¯èƒ½æ˜¯ä½¿ç”¨ EditorUtil ç±»ä¸­çš„æ–¹æ³•ï¼Œå°† editor å’Œ editorDisposable å…³è”èµ·æ¥ï¼Œä»¥è¿›è¡ŒæŸç§èµ„æºçš„é‡Šæ”¾æˆ–æ¸…ç†æ“ä½œã€‚
+        // ÕâÐÐ´úÂë¿ÉÄÜÊÇÊ¹ÓÃ EditorUtil ÀàÖÐµÄ·½·¨£¬½« editor ºÍ editorDisposable ¹ØÁªÆðÀ´£¬ÒÔ½øÐÐÄ³ÖÖ×ÊÔ´µÄÊÍ·Å»òÇåÀí²Ù×÷¡£
         EditorUtil.disposeWithEditor(editor, editorDisposable);
 
-        // è¿™éƒ¨åˆ†ä½¿ç”¨ ApplicationManager èŽ·å–åº”ç”¨ç¨‹åºå¯¹è±¡ï¼Œå¹¶é€šè¿‡ invokeLater æ–¹æ³•è¿›è¡Œå¼‚æ­¥æ“ä½œã€‚åœ¨å¼‚æ­¥æ“ä½œä¸­ï¼Œ
-        // ä¸º editor çš„å…‰æ ‡æ¨¡åž‹æ·»åŠ äº†ä¸€ä¸ª CaretListenerï¼ˆå¯èƒ½ç”¨äºŽç›‘å¬å…‰æ ‡çš„ä½ç½®å˜åŒ–ç­‰äº‹ä»¶ï¼‰ï¼Œå¹¶å†æ¬¡ä½¿ç”¨äº† editorDisposable ã€‚
-        // ä¾‹å¦‚ï¼Œåœ¨ä¸€ä¸ªå›¾å½¢ç•Œé¢åº”ç”¨ä¸­ï¼Œå½“éœ€è¦åœ¨åŽå°å¤„ç†ä¸€äº›ä¸Žç¼–è¾‘å™¨ç›¸å…³çš„èµ„æºé‡Šæ”¾ï¼ŒåŒæ—¶åˆè¦åœ¨åˆé€‚çš„æ—¶å€™å¼‚æ­¥æ·»åŠ å…‰æ ‡ç›‘å¬ï¼Œ
-        // å°±å¯èƒ½ä¼šé‡‡ç”¨è¿™æ ·çš„ä»£ç ç»“æž„ã€‚è¿™æ ·å¯ä»¥ç¡®ä¿èµ„æºçš„åˆç†ç®¡ç†å’Œç•Œé¢æ“ä½œçš„æµç•…æ€§ã€‚
+        // Õâ²¿·ÖÊ¹ÓÃ ApplicationManager »ñÈ¡Ó¦ÓÃ³ÌÐò¶ÔÏó£¬²¢Í¨¹ý invokeLater ·½·¨½øÐÐÒì²½²Ù×÷¡£ÔÚÒì²½²Ù×÷ÖÐ£¬
+        // Îª editor µÄ¹â±êÄ£ÐÍÌí¼ÓÁËÒ»¸ö CaretListener£¨¿ÉÄÜÓÃÓÚ¼àÌý¹â±êµÄÎ»ÖÃ±ä»¯µÈÊÂ¼þ£©£¬²¢ÔÙ´ÎÊ¹ÓÃÁË editorDisposable ¡£
+        // ÀýÈç£¬ÔÚÒ»¸öÍ¼ÐÎ½çÃæÓ¦ÓÃÖÐ£¬µ±ÐèÒªÔÚºóÌ¨´¦ÀíÒ»Ð©Óë±à¼­Æ÷Ïà¹ØµÄ×ÊÔ´ÊÍ·Å£¬Í¬Ê±ÓÖÒªÔÚºÏÊÊµÄÊ±ºòÒì²½Ìí¼Ó¹â±ê¼àÌý£¬
+        // ¾Í¿ÉÄÜ»á²ÉÓÃÕâÑùµÄ´úÂë½á¹¹¡£ÕâÑù¿ÉÒÔÈ·±£×ÊÔ´µÄºÏÀí¹ÜÀíºÍ½çÃæ²Ù×÷µÄÁ÷³©ÐÔ¡£
         ApplicationManager.getApplication().invokeLater(() -> {
             editor.getCaretModel().addCaretListener(new MyCaretListener(editor), editorDisposable);
             editor.addEditorMouseListener(new MyMouseListener(), editorDisposable);

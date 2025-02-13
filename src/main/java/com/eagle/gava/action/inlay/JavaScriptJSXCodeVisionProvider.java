@@ -78,7 +78,7 @@ public class JavaScriptJSXCodeVisionProvider implements InlayHintsProvider<NoSet
                         @NotNull
                         @Override
                         public String getRegularText() {
-                            return "        "; //
+                            return "展開或者收起  "; //
                         }
 
                         @Override

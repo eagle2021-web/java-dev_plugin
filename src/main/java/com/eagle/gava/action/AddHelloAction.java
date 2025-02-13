@@ -1,40 +1,61 @@
 package com.eagle.gava.action;
 
 import com.eagle.gava.factory.FieldFactory;
+import com.eagle.gava.listen.EditorListener;
 import com.eagle.gava.util.MethodUtil;
+import com.eagle.gava.util.OpenUtil;
+import com.eagle.gava.util.PsiFinder;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiMethod;
 import com.vladsch.flexmark.util.data.DataKey;
 import org.jetbrains.annotations.NotNull;
 
 
 public class AddHelloAction extends AnAction {
+    static String pat = "D:\\projects\\java\\dev_plugin\\src\\test\\java\\com\\ava\\Hel.java";
+
+    public static void checkVir(Project project) {
+        VirtualFile virtualFile = PsiFinder.getVirtualFile(project, pat);
+        System.out.println("checkVir virtualFile = " + virtualFile);
+    }
+
+    public static void open(Project project) {
+        OpenUtil.open(project, pat, 0);
+    }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-        // è·å–å½“å‰é¡¹ç›®
+        // »ñÈ¡µ±Ç°ÏîÄ¿
         Project project = anActionEvent.getProject();
         if (project == null) {
-            return; // å¦‚æœæ²¡æœ‰é¡¹ç›®ï¼Œç›´æ¥è¿”å›
+            return; // Èç¹ûÃ»ÓĞÏîÄ¿£¬Ö±½Ó·µ»Ø
         }
+        checkVir(project);
+        open(project);
 
-        // ä½¿ç”¨ getData æ–¹æ³•è·å–å½“å‰ç¼–è¾‘å™¨
+        // Ê¹ÓÃ getData ·½·¨»ñÈ¡µ±Ç°±à¼­Æ÷
         Editor editor = anActionEvent.getData(CommonDataKeys.EDITOR);
         if (editor != null) {
-            // è·å–å…‰æ ‡ä½ç½®çš„ PsiMethod
+            // »ñÈ¡¹â±êÎ»ÖÃµÄ PsiMethod
             PsiMethod method = MethodUtil.getPsiMethodAtCaret(editor);
             if (method != null) {
-                System.out.println("è·å–åˆ°çš„æ–¹æ³•: " + method.getName());
+                System.out.println("»ñÈ¡µ½µÄ·½·¨: " + method.getName());
                 FieldFactory.getInstance(project).createHelloMethod(method.getContainingClass());
             } else {
-                System.out.println("å…‰æ ‡ä½ç½®æ²¡æœ‰æ–¹æ³•");
+                System.out.println("¹â±êÎ»ÖÃÃ»ÓĞ·½·¨");
             }
         } else {
-            System.out.println("æ²¡æœ‰æ‰¾åˆ°æ´»åŠ¨çš„ç¼–è¾‘å™¨");
+            System.out.println("Ã»ÓĞÕÒµ½»î¶¯µÄ±à¼­Æ÷");
         }
+        PsiMethod method = MethodUtil.getPsiMethodAtCaret(editor);
+        VirtualFile virtualFile = method.getContainingClass().getContainingFile().getVirtualFile();
+        System.out.println("virtualFile = " + virtualFile);
+        Editor editor1 = PsiFinder.getEditor(project, virtualFile);
+        System.out.println(editor1);
     }
 }
