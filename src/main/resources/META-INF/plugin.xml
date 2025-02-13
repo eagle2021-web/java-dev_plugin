@@ -77,7 +77,7 @@
                 description="Daaa">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
-        <action id="com.eagle.gava.action.AddHelloAction" class="com.eagle.gava.action.AddHelloAction"
+        <action id="com.eagle.gava.action.TestApiAction" class="com.eagle.gava.action.TestApiAction"
                 text="EAGLE:AddHelloAction" description="AddHelloAction">
             <keyboard-shortcut first-keystroke="control alt A" keymap="$default"/>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>

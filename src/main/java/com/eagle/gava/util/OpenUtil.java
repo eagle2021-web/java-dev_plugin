@@ -1,6 +1,9 @@
 package com.eagle.gava.util;
 
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.editor.ScrollType;
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
@@ -12,12 +15,52 @@ public class OpenUtil {
         VirtualFile virtualFile = PsiFinder.getVirtualFile(project, path);
         FileEditorManager fileEditorManager = FileEditorManager.getInstance(project);
         FileEditor[] fileEditors = fileEditorManager.openFile(virtualFile, true);
-        // æ‰“å¼€æ–‡ä»¶ç¼–è¾‘å™¨
+        // ´ò¿ªÎÄ¼ş±à¼­Æ÷
         OpenFileDescriptor descriptor = new OpenFileDescriptor(project, virtualFile, offset);
         Editor editor = fileEditorManager.openTextEditor(descriptor, true);
 
-        // æ‰“å¼€æ–‡ä»¶
-        // å®šä½åˆ°offsetè¡Œ
-        // æ˜¾ç¤º
+    }
+    public static void openCaret(Project project, String path, int offset){
+        VirtualFile virtualFile = PsiFinder.getVirtualFile(project, path);
+        Editor editor = PsiFinder.getEditor(project, virtualFile);
+        editor.getCaretModel().moveToOffset(offset);
+    }
+    public static void openVisible(Project project, String path, int offset){
+        // ¼ÙÉè´æÔÚÒ»¸ö·½·¨¿ÉÒÔ½«ÎÄ¼şÂ·¾¶×ª»»Îª VirtualFile
+        // VirtualFile virtualFile = PsiFinder.getVirtualFile(project, path); // ÕâĞĞ²»ÊÇ±ê×¼API£¬ĞèÒªÌæ»»
+        VirtualFile virtualFile = PsiFinder.getVirtualFile(project, path); // Ê¹ÓÃ×Ô¶¨Òå·½·¨
+
+        if (virtualFile == null || !virtualFile.isValid()) {
+            return; // ´¦ÀíÎÄ¼şÎŞ·¨ÕÒµ½»òÎŞĞ§µÄÇé¿ö
+        }
+
+        FileEditorManager fileEditorManager = FileEditorManager.getInstance(project);
+        fileEditorManager.openFile(virtualFile, true); // ´ò¿ªÎÄ¼ş
+
+        // ´´½¨ OpenFileDescriptor À´µ¼º½µ½Ö¸¶¨µÄÆ«ÒÆÁ¿
+        OpenFileDescriptor descriptor = new OpenFileDescriptor(project, virtualFile, offset);
+        if (descriptor.canNavigate()) {
+            descriptor.navigate(true); // µ¼º½µ½Ö¸¶¨µÄÆ«ÒÆÁ¿
+
+            // »ñÈ¡µ±Ç°´ò¿ªµÄ±à¼­Æ÷
+            Editor editor = fileEditorManager.getSelectedTextEditor();
+            if (editor != null) {
+                // »ñÈ¡Æ«ÒÆÁ¿¶ÔÓ¦µÄÂß¼­Î»ÖÃ
+                LogicalPosition logicalPosition = editor.offsetToLogicalPosition(offset);
+                // ½«Âß¼­Î»ÖÃ×ª»»ÎªÊÓ¾õÎ»ÖÃ£¨Õâ¿ÉÄÜ»áÒòÎªÈí»»ĞĞµÈ¶øÓĞËù²»Í¬£©
+                VisualPosition visualPosition = editor.logicalToVisualPosition(logicalPosition);
+
+                // ÊÖ¶¯¹ö¶¯±à¼­Æ÷ÒÔ³¢ÊÔ½«Ö¸¶¨Î»ÖÃ¾ÓÖĞ£¨Õâ²»ÊÇÑÏ¸ñ¾ÓÖĞµÄ·½·¨£¬µ«¿ÉÒÔ×÷ÎªÆğµã£©
+                // Äã¿ÉÒÔ¸ù¾İ±à¼­Æ÷µÄĞĞ¸ßºÍ¿ÉÊÓÇøÓòµÄ¸ß¶ÈÀ´¼ÆËã¸ü¾«È·µÄ¾ÓÖĞÎ»ÖÃ
+                int lineHeight = editor.getLineHeight();
+                int visibleLineCount = editor.getSettings().getAdditionalLinesCount();
+                System.out.println("visibleLineCount = " + visibleLineCount);
+                int centerY = visualPosition.line - visibleLineCount / 2;
+                if (centerY < 0) {
+                    centerY = 0; // È·±£²»»á¹ö¶¯µ½ÎÄ¼ş¶¥²¿ÒÔÉÏ
+                }
+                editor.getScrollingModel().scrollTo(new LogicalPosition(centerY, visualPosition.column), ScrollType.MAKE_VISIBLE);
+            }
+        }
     }
 }
